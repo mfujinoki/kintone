@@ -7,7 +7,7 @@
   //Zoho Invoice API url
   var url = 'https://invoice.zoho.com/api/v3/invoices?authtoken=' + token + '&organization_id=' + organization_id;
   //API header
-  var headers = {"Content-Type": "application/json"};
+  var headers = {"Content-Type": "multipart/form-data"};
 
   //レコード詳細画面の表示後イベント
   kintone.events.on('app.record.detail.show',function(event){
@@ -39,9 +39,12 @@
          });
          JSONString += ']}';
          JSONString = JSONString.replace(",]","]");
+         //Form-dataとしてデータ送信
+         var data = new FormData();
+         data.append("JSONString",JSONString);
 
          //HTTPリクエストの送信（Zoho InvoiceのAPIの呼び出し）
-          kintone.proxy(url, 'POST', headers, JSONString, function(body, status, headers) {
+          kintone.proxy(url, 'POST', headers, data, function(body, status, headers) {
               alert(status);
               console.log(status, body);
               if (status >= 200 && status < 300) {
