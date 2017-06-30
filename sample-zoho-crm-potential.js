@@ -3,12 +3,9 @@
     //API用パラメーター
     var token = "fd21709d6ad5e5d4cdfc7f8924adcff8";
     var url = "https://crm.zoho.com/crm/private/json/Potentials/insertRecords?authtoken=" + token + "&scope=crmapi";
-    //■詳細画面
-    "use strict";
+    //詳細画面
     kintone.events.on('app.record.detail.show',
         function(event) {
-
-
             // 画面下部にボタンを設置
             var myFooterButton = document.createElement('button');
             myFooterButton.id = 'my_footer_button';
@@ -17,14 +14,14 @@
                 //レコードのデータの取得
                 var rec = kintone.app.record.get();
                 if (rec) {
-                    var owner = rec.record.owner.value;
-                    var projectName = rec.record.project_name.value;
-                    var company = rec.record.company_name.value;
-                    var contactName = rec.record.customer_name.value;
-                    var stage = rec.record.stage.value;
-                    var closingDate = rec.record.closing_date.value;
-                    var productName = rec.record.product_name.value;
-                    var amount = rec.record.total.value;
+                    var owner = rec.record.owner.value;//案件担当者名
+                    var projectName = rec.record.project_name.value;//案件名
+                    var company = rec.record.company_name.value;//会社名
+                    var contactName = rec.record.customer_name.value;//先方担当者
+                    var stage = rec.record.stage.value;//ステージ
+                    var closingDate = rec.record.closing_date.value;//見込み時期
+                    var productName = rec.record.product_name.value;//製品名
+                    var amount = rec.record.total.value;//小計
 
                     //XMLデータの処理
                     var xmlData = "";
