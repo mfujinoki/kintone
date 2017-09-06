@@ -20,6 +20,7 @@
     kintone.events.on(['app.record.edit.submit.success','app.record.create.submit.success'],
         function(event) {
           sendEvent(event.record);
+          return event;
     });
 
     function sendEvent(record)
@@ -89,7 +90,10 @@
             if(resp.error){
                 alert("イベントの登録に失敗しました。");
             }else{
+                record['event_id']['value'] = resp.id;
+                kintone.app.record.set(record);
                 alert("カレンダーにイベントを登録しました。");
+
             }
 
         });
