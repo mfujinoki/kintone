@@ -23,15 +23,18 @@
           return event;
     });
 
+    // APIクライアントとOauth2モジュールのロード
+    // モジュールロード後のinitClient関数の呼び出し
+    gapi.load('client:auth2', initClient);
+
     function sendEvent(record)
     {
       //公開フラグが有効な時のみデータ送信
       if(record.publish.value == '公開する')
       {
-          // APIクライアントとOauth2モジュールのロード
-          // モジュールロード後のinitClient関数の呼び出し
-          gapi.load('client:auth2', initClient);
-
+          if(gapi.auth2.getAuthInstance().isSignedIn.get()){
+            makeApiCall(record);
+          }
       }
     }
     function initClient()
@@ -43,25 +46,16 @@
             'scope': scope
         }).then(function () {
             // Google認証済みのチェック
-            checkSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
+              // Google認証の呼び出し
+              gapi.auth2.getAuthInstance().signIn();
+            }
         });
 
     }
-    function checkSigninStatus(isSignedIn) {
-      if (isSignedIn) {
-          // APIリクエストの実行
-          makeApiCall();
 
-      } else {
-        // Google認証の呼び出し
-        gapi.auth2.getAuthInstance().signIn();
-      }
-    }
-
-    function makeApiCall() {
+    function makeApiCall(record) {
         // API リクエスト
-        // kintone詳細画面の情報取得
-        var record = kintone.app.record.get().record;
         // リクエストパラメータの設定
         var event = {
             // イベントのタイトル
