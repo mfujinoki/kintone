@@ -16,6 +16,26 @@
     //Discovery Docs
     var discovery_docs = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
 
+    // APIクライアントとOauth2モジュールのロード
+    // モジュールロード後のinitClient関数の呼び出し
+    gapi.load('client:auth2', initClient);
+
+    function initClient()
+    {
+        gapi.client.init({
+            'apiKey': api_key,
+            'discoveryDocs': discovery_docs,
+            'clientId': client_id,
+            'scope': scope
+        }).then(function () {
+            // Google認証済みのチェック
+            if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
+              // Google認証の呼び出し
+              gapi.auth2.getAuthInstance().signIn();
+            }
+        });
+    }
+
     //レコード編集画面の保存成功後イベント及びレコード追加画面の保存成功後イベント
     kintone.events.on(['app.record.edit.submit.success','app.record.create.submit.success'],
         function(event) {
@@ -60,6 +80,7 @@
             }).then(function(resp){
                 if(resp.error){
                     event.error = "イベントの登録に失敗しました。";
+                    return event;
                 }else{
                       var body = {
                       "app":kintone.app.getId(),
@@ -79,27 +100,10 @@
                       return event;
                     });
                 }
+            },function(error){
+              alert("Google イベントIDの登録に失敗しました。");
+              return event;
             });
           }
     });
-
-    // APIクライアントとOauth2モジュールのロード
-    // モジュールロード後のinitClient関数の呼び出し
-    gapi.load('client:auth2', initClient);
-
-    function initClient()
-    {
-        gapi.client.init({
-            'apiKey': api_key,
-            'discoveryDocs': discovery_docs,
-            'clientId': client_id,
-            'scope': scope
-        }).then(function () {
-            // Google認証済みのチェック
-            if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
-              // Google認証の呼び出し
-              gapi.auth2.getAuthInstance().signIn();
-            }
-        });
-    }
 })();
