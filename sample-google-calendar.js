@@ -77,39 +77,49 @@
               // イベントの説明
               'description': record.event_description.value
           };
-          // リクエストメソッドとパラメータを設定し、実行
-          gapi.client.calendar.events.insert(
+          var request;
+          // リクエストメソッドとパラメータの設定
+          if (record.event_id.value)//公開済みイベントを更新
           {
-                  'calendarId': calendar_id,
-                  'resource': params
-          }).then(function(resp){
+            request = gapi.client.calendar.events.update(
+            {
+              'calendarId': calendar_id,
+              'eventId': record.event_id.value,
+              'resource': params
+            });
+          }else {//未公開のイベントを追加
+            request = gapi.client.calendar.events.insert(
+            {
+              'calendarId': calendar_id,
+              'resource': params
+            });
+          }
+          //Googleカレンダーへのイベント登録の実行
+          request.execute(function(resp){
               if(resp.error){
                   alert("イベントの登録に失敗しました。");
               }else{
                     var body = {
-                    "app":kintone.app.getId(),
-                    "id":record.$id.value,
-                    "record":{
-                      "event_id":{
-                        "value":resp.result.id
-                      },
-                      "publish":{
-                        "value":["公開済み"]
+                      "app":kintone.app.getId(),
+                      "id":record.$id.value,
+                      "record":{
+                        "event_id":{
+                          "value":resp.result.id
+                        }
                       }
-                    }
-                  };
-                  return kintone.api(kintone.api.url('/k/v1/record',true),'PUT',body).then(function(success){
-                    alert("カレンダーにイベントを登録しました。");
-                    return event;
-                  }).catch(function(error){
-                    alert("Google イベントIDの登録に失敗しました。");
-                  });
+                    };
+                    return kintone.api(kintone.api.url('/k/v1/record',true),'PUT',body).then(function(success){
+                      alert("カレンダーにイベントを登録しました。");
+                      location.reload();
+                    }).catch(function(error){
+                      alert("Google イベントIDの登録に失敗しました。");
+                    });
               }
           },function(error){
             alert("Google イベントIDの登録に失敗しました。");
           });
-        }
-      };
+        };
+      }
       kintone.app.record.getSpaceElement('publish_button_space').appendChild(publishButton);
       return event;
     });
