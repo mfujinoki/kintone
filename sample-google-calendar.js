@@ -18,7 +18,6 @@
 
     // APIクライアントとOauth2モジュールのロード
     // モジュールロード後のinitClient関数の呼び出し
-    //gapi.load('client:auth2', initClient);
     gapi.load('client:auth2', {
       callback: function() {
         // Handle gapi.client initialization.
@@ -27,11 +26,6 @@
       onerror: function() {
         // Handle loading error.
         alert('gapi.client のロードに失敗しました!');
-      },
-      timeout: 5000, // 5 seconds.
-      ontimeout: function() {
-        // Handle timeout.
-        alert('時間内に　gapi.client をロードできませんでした!');
       }
     });
 
