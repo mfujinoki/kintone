@@ -130,6 +130,18 @@
         };
       }
       kintone.app.record.getSpaceElement('publish_button_space').appendChild(publishButton);
+      // フィールド非表示
+      kintone.app.record.setFieldShown("publish", false);
+      
       return event;
     });
+
+    kintone.events.on(['app.record.create.show', 'app.record.edit.show'],function(event){
+      // フィールド非表示
+      kintone.app.record.setFieldShown("publish", false);
+      // フィールドを編集不可へ
+      event.record.event_id.disabled = true;
+       return event;
+    });
+
 })();
