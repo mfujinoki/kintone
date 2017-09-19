@@ -55,6 +55,7 @@
       publishButton.id = 'publish_button';
       publishButton.innerHTML = '公開する';
       publishButton.className = "button-simple-cybozu geo-search-btn";
+      publishButton.style = "margin-top: 30px; margin-left: 10px;";
       publishButton.onclick = function() {
         //レコードのデータの取得
         var record = kintone.app.record.get().record;
@@ -130,18 +131,15 @@
         };
       }
       kintone.app.record.getSpaceElement('publish_button_space').appendChild(publishButton);
-      // フィールド非表示
-      kintone.app.record.setFieldShown("publish", false);
-      
+
       return event;
     });
 
     kintone.events.on(['app.record.create.show', 'app.record.edit.show'],function(event){
-      // フィールド非表示
-      kintone.app.record.setFieldShown("publish", false);
+
       // フィールドを編集不可へ
       event.record.event_id.disabled = true;
-       return event;
+      return event;
     });
 
 })();
