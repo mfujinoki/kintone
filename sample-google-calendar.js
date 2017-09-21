@@ -3,7 +3,7 @@
     "use strict";
 
     // API キー
-    var api_key = "AIzaSyCwAdw_BxT0WmK1paDxdphWIQodE9Hdiiw";
+    var api_key = 'AIzaSyCwAdw_BxT0WmK1paDxdphWIQodE9Hdiiw';
     // クライアントID
     var client_id = '478055048977-sbhonj53kd5q7oagj1fr2qlt5jkka85g.apps.googleusercontent.com';
 
@@ -11,7 +11,7 @@
     var calendar_id = 'fujibiz.com_88jjuijlam3s1ja3nr6nuekmf8@group.calendar.google.com';
 
     // 認証用URL（読み取り／更新）
-    var scope = "https://www.googleapis.com/auth/calendar";
+    var scope = 'https://www.googleapis.com/auth/calendar';
 
     //Discovery Docs
     var discovery_docs = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
@@ -20,11 +20,11 @@
     // モジュールロード後のinitClient関数の呼び出し
     gapi.load('client:auth2', {
       callback: function() {
-        // Handle gapi.client initialization.
+        // gapi.clientのイニシャライズ処理
         initClient();
       },
       onerror: function() {
-        // Handle loading error.
+        // エラー時の処理
         alert('gapi.client のロードに失敗しました!');
       }
     });
