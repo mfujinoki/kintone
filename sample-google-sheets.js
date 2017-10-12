@@ -1,12 +1,12 @@
 (function() {
     "use strict";
     // API キー
-    var api_key = 'AIzaSyCwAdw_BxT0WmK1paDxdphWIQodE9Hdiiw';
+    var api_key = config.GOOGLE_API_KEY;
     // クライアントID
-    var client_id = '478055048977-sbhonj53kd5q7oagj1fr2qlt5jkka85g.apps.googleusercontent.com';
+    var client_id = config.GOOGLE_CLIENT_ID;
 
     // スプレッドシートID
-    var sheet_id = '1yamZyhRrOz9n6HtTDHndpXcD4FoU0cmnLMjGlas_3TM';
+    var sheet_id = config.GOOGLE_SHEET_ID;
 
     // 認証用URL（読み取り）
     var scope = 'https://www.googleapis.com/auth/spreadsheets';

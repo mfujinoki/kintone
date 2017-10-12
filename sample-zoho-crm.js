@@ -1,7 +1,7 @@
 (function($) {
     "use strict";
     //API用パラメーター
-    var token = "fd21709d6ad5e5d4cdfc7f8924adcff8";
+    var token = config.ZOHO_CRM_TOKEN;
     var url = "https://crm.zoho.com/crm/private/json/Potentials/insertRecords?authtoken=" + token + "&scope=crmapi";
     //■詳細画面
     "use strict";

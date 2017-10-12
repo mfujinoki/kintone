@@ -1,9 +1,9 @@
 (function(){
   'use strinct';
   //Zoho Invoice API Token
-  var token = 'ba0dd28f50f17ee0cdf01a1453586ea5';
+  var token = config.ZOHO_INVOICE_TOKEN;
   //Zoho Invoice 組織ID
-  var organization_id = '47696963';
+  var organization_id = config.ZOHO_INVOICE_ORG_ID;
   //Zoho Invoice API url
   var url = 'https://invoice.zoho.com/api/v3/invoices?authtoken=' + token + '&organization_id=' + organization_id;
   //API header

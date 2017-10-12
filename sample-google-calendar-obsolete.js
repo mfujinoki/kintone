@@ -3,10 +3,10 @@
     "use strict";
 
     // クライアントID
-    var CLIENT_ID = '478055048977-sbhonj53kd5q7oagj1fr2qlt5jkka85g.apps.googleusercontent.com';
+    var CLIENT_ID = config.GOOGLE_CLIENT_ID;
 
     // カレンダーID
-    var CALENDAR_ID = 'fujibiz.com_88jjuijlam3s1ja3nr6nuekmf8@group.calendar.google.com';
+    var CALENDAR_ID = config.GOOGLE_CALENDAR_ID;
 
     // 認証用URL（読み取り／更新）
     var SCOPES = ["https://www.googleapis.com/auth/calendar"];
