@@ -132,7 +132,7 @@
             }
           ]
         };
-        //スプレドシートへの出力実行
+        //スプレッドシートへの出力実行
         var request = gapi.client.sheets.spreadsheets.values.batchUpdate(params, batchUpdateSpreadsheetRequestBody);
         request.then(function(response) {
           alert("帳票出力に成功しました。");
