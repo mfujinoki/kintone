@@ -1,4 +1,4 @@
-(function () {
+(function() {
 
     "use strict";
 
@@ -29,8 +29,7 @@
       }
     });
 
-    function initClient()
-    {
+    function initClient() {
         gapi.client.init({
             'apiKey': api_key,
             'discoveryDocs': discovery_docs,
@@ -38,16 +37,16 @@
             'scope': scope
         }).then(function () {
             // Google認証済みのチェック
-            if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
+            if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
               // Google認証の呼び出し
               gapi.auth2.getAuthInstance().signIn();
             }
         });
     }
     //レコード詳細画面の表示後イベント
-    kintone.events.on('app.record.detail.show',function(event){
+    kintone.events.on('app.record.detail.show', function(event) {
       // 増殖バグ回避
-      if (document.getElementById ('publish_button') !== null) {
+      if (document.getElementById('publish_button') !== null) {
           return event;
       }
       // 画面下部にボタンを設置
@@ -56,7 +55,7 @@
       publishButton.innerHTML = '公開する';
       publishButton.className = "button-simple-cybozu geo-search-btn";
       publishButton.style = "margin-top: 30px; margin-left: 10px;";
-      publishButton.addEventListener('click', function () {
+      publishButton.addEventListener('click', function() {
             publishEvent(event);
       });
       kintone.app.record.getSpaceElement('publish_button_space').appendChild(publishButton);
@@ -64,20 +63,19 @@
       return event;
     });
 
-    kintone.events.on(['app.record.create.show', 'app.record.edit.show'],function(event){
+    kintone.events.on(['app.record.create.show', 'app.record.edit.show'], function(event) {
 
       // フィールドを編集不可へ
       event.record.event_id.disabled = true;
       return event;
     });
 
-    function publishEvent(event)
-    {
+    function publishEvent(event) {
       //レコードのデータの取得
       var record = kintone.app.record.get().record;
       if (record) {
         // Google認証済みのチェック
-        if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
+        if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
           // Google認証の呼び出し
           gapi.auth2.getAuthInstance().signIn();
           alert('Google認証されていません。');
@@ -105,8 +103,7 @@
         };
         var request;
         // リクエストメソッドとパラメータの設定
-        if (record.event_id.value)//公開済みイベントを更新
-        {
+        if (record.event_id.value) { //公開済みイベントを更新
           request = gapi.client.calendar.events.update(
           {
             'calendarId': calendar_id,
@@ -121,29 +118,29 @@
           });
         }
         //Googleカレンダーへのイベント登録の実行
-        request.execute(function(resp){
-            if(resp.error){
+        request.execute(function(resp) {
+            if (resp.error) {
                 alert("イベントの登録に失敗しました。");
-            }else{
+            }else {
                   var body = {
-                    "app":kintone.app.getId(),
-                    "id":record.$id.value,
-                    "record":{
-                      "event_id":{
-                        "value":resp.result.id
+                    "app": kintone.app.getId(),
+                    "id": record.$id.value,
+                    "record": {
+                      "event_id": {
+                        "value": resp.result.id
                       }
                     }
                   };
-                  return kintone.api(kintone.api.url('/k/v1/record',true),'PUT',body).then(function(success){
+                  return kintone.api(kintone.api.url('/k/v1/record', true), 'PUT', body).then(function(success) {
                     alert("カレンダーにイベントを登録しました。");
                     location.reload();
-                  }).catch(function(error){
+                  }).catch(function(error) {
                     alert("Google イベントIDの登録に失敗しました。");
                   });
             }
-        },function(error){
+        }, function(error) {
           alert("Google イベントIDの登録に失敗しました。");
         });
-      };
+      }
     }
 })();
