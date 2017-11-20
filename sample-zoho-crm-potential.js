@@ -14,7 +14,6 @@
                 //レコードのデータの取得
                 var rec = kintone.app.record.get();
                 if (rec) {
-                    var projectOwner = rec.record.project_owner.value[0].code;//案件担当者名
                     var projectName = rec.record.project_name.value;//案件名
                     var company = rec.record.company_name.value;//会社名
                     var stage = rec.record.stage.value;//ステージ
@@ -26,7 +25,6 @@
                     var xmlData = "";
                     xmlData = xmlData + "<Potentials>";
                     xmlData = xmlData + "<row no=\"1\">";
-                    xmlData = xmlData + "<FL val=\"Potential Owner\">" + projectOwner + "</FL>";
                     xmlData = xmlData + "<FL val=\"Potential Name\">" + projectName + "</FL>";
                     xmlData = xmlData + "<FL val=\"Account Name\">" + company + "</FL>";
                     xmlData = xmlData + "<FL val=\"Stage\">" + stage + "</FL>";

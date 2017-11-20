@@ -1,8 +1,9 @@
 (function() {
     "use strict";
-
+    //ガントチャートのデータテーブル設定、ガントチャートの初期化、描画メソッドの呼び出しをするコールバック関数
     function drawChart(records) {
       var data = new google.visualization.DataTable();
+      //Google Chartsのガントチャート用テーブルにフィールドを追加
       data.addColumn('string', 'Task ID');
       data.addColumn('string', 'Task Name');
       data.addColumn('string', 'Resource');
@@ -11,32 +12,41 @@
       data.addColumn('number', 'Duration');
       data.addColumn('number', 'Percent Complete');
       data.addColumn('string', 'Dependencies');
-      // Set the record.
+      // レコードを設定
       for (var i = 0; i < records.length; i++) {
-          data.addRow([records[i]['project_no']['value'],records[i]['project_name']['value'],records[i]['project_member']['value'][0]['name'],new Date(records[i]['start_date']['value']),new Date(records[i]['target_completion_date']['value']),null,Number(records[i]['status']['value']),null]);
+          data.addRow([records[i]['project_no']['value'],//プロジェクトNo
+          records[i]['project_name']['value'],//プロジェクト名
+          records[i]['project_member']['value'][0]['name'],//プロジェクトメンバー
+          new Date(records[i]['start_date']['value']),//開始日
+          new Date(records[i]['target_completion_date']['value']),//終了予定日
+          null,
+          Number(records[i]['status']['value']),//進捗状況
+          null]);
       }
+      //ガントチャートのオプション設定
       var options = {
         height: records.length * 30 + 100,
         gantt: {
           trackHeight: 30
         }
       };
-
+      //Google Visualizartion APIの初期化
       var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
-
+      //ガントチャートの描画
       chart.draw(data, options);
     }
-    // Record list of events.
+    // レコード一覧画面の表示後イベント
     kintone.events.on('app.record.index.show', function(event) {
-
+        //アプリのレコード取得
         var records = event.records;
 
-        // Don't display when there is no record.
+        // レコードが無い場合、チャートを非表示
         if (records.length === 0) {
             return;
         }
+        //ヘッダースペースの要素を取得
         var elSpace = kintone.app.getHeaderSpaceElement();
-        // I create an element of Gantt chart.
+        // チャート表示用要素を作成
         var elGantt = document.getElementById("chart_div");
         if (elGantt === null) {
             elGantt = document.createElement("div");
@@ -44,8 +54,9 @@
             elSpace.appendChild(elGantt);
         }
 
-
+        //Google Chart API ライブラリーのロード
         google.charts.load('current', {'packages':['gantt'], 'language': 'ja'});
+        //APIロード後のコールバック関数の設定
         google.charts.setOnLoadCallback(
           function(){
             drawChart(records);
