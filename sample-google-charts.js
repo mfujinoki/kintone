@@ -55,7 +55,7 @@
         }
 
         //Google Chart API ライブラリーのロード
-        google.charts.load('current', {'packages':['gantt'], 'language': 'ja'});
+        google.charts.load('current', {'packages':['gantt'], 'language': 'ja'});//日本語を指定
         //APIロード後のコールバック関数の設定
         google.charts.setOnLoadCallback(
           function(){
