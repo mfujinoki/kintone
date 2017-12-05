@@ -21,7 +21,7 @@
       for (var i = 0; i < records.length; i++) {
           project_no = records[i]['project_no']['value'];
           project_name = records[i]['project_name']['value'];
-          if (typeof records[i]['project_team_members']['value']['length'] > 0)
+          if (records[i]['project_team_members']['value'].length > 0)
             project_resource = records[i]['project_team_members']['value'][0]['name'];
           start_date = new Date(records[i]['start_date']['value']);
           end_date = new Date(records[i]['end_date']['value']);
