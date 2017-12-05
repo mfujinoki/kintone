@@ -12,27 +12,27 @@
       data.addColumn('number', 'Percent Complete');
       data.addColumn('string', 'Dependencies');
       // Set the record.
-      var project_no='';
-      var project_name='';
-      var project_resource = '';
+      var task_no='';
+      var task_name='';
+      var task_resource = '';
       var start_date='';
       var end_date='';
       var status=0;
       for (var i = 0; i < records.length; i++) {
-          project_no = records[i]['project_no']['value'];
-          project_name = records[i]['project_name']['value'];
-          if (records[i]['project_manager']['value'].length > 0)
+          task_no = records[i]['task_no']['value'];
+          task_name = records[i]['task_name']['value'];
+          if (records[i]['task_member']['value'].length > 0)
           {
-            for (var j = 0; j < records[i]['project_manager']['value'].length; j++)
+            for (var j = 0; j < records[i]['task_member']['value'].length; j++)
               if(j === 0)
-                project_resource = records[i]['project_manager']['value'][j]['name'];
+                task_resource = records[i]['task_member']['value'][j]['name'];
               else
-                project_resource += ', ' + records[i]['project_manager']['value'][j]['name'];
+                task_resource += ', ' + records[i]['task_member']['value'][j]['name'];
           }
           start_date = new Date(records[i]['start_date']['value']);
           end_date = new Date(records[i]['end_date']['value']);
-          status = new Number(records[i]['status']['value']);
-          data.addRow([project_no, project_name,project_resource,start_date,end_date,null,status,null]);
+          status = new Number(records[i]['task_status']['value']);
+          data.addRow([task_no, task_name,task_resource,start_date,end_date,null,status,null]);
       }
       var options = {
         height: records.length * 30 + 100,
