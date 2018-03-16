@@ -1,5 +1,5 @@
+'use strict';
 function sendToKintone() {
-  'use strict';
   Logger.log('Function called');
   var subdomain = "2t48w.kintone.com";//サブドメイン名
   var scriptProperties = PropertiesService.getScriptProperties();
