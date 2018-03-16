@@ -28,9 +28,10 @@ function getFormResponse(e) {
 function sendToKintone(e) {
     'use strict';
     Logger.log('Form submitted');
+    var scriptProperties = PropertiesService.getScriptProperties();
     var subdomain = "9i25n";//サブドメイン名
     var apps = {
-        YOUR_APPLICATION1: { appid: 23, name: "kintone Meetup 参加者", token: "CaXbAkrysVmnuRS7hDUaPyUiZfFR6gZtbkkwFtWb" }
+        YOUR_APPLICATION1: { appid: scriptProperties.getProperty('AppId'), name: "kintone Meetup 参加者", token: scriptProperties.getProperty('ApiToken') }
     };
     var manager = new KintoneManager.KintoneManager(subdomain, apps);// ライブラリーの初期化
     //var records = JSON.parse(getFormResponse(e));//JSON形式に変換
