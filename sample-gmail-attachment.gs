@@ -1,3 +1,19 @@
+function sendToKintone() {
+  'use strict';
+  Logger.log('Function called');
+  var subdomain = "2t48w.kintone.com";//サブドメイン名
+  var scriptProperties = PropertiesService.getScriptProperties();
+  var apps = {
+    YOUR_APPLICATION1: { appid: scriptProperties.getProperty('AppId'), name: "Contact from Gmail", token: scriptProperties.getProperty('ApiToken') }
+  };
+  var manager = new KintoneManager.KintoneManager(subdomain, apps);// ライブラリーの初期化
+  var records = JSON.parse(getGmailMessage());// JSON形式に変換
+  var response = manager.create("YOUR_APPLICATION1", records);//kintone レコードの生成
+  // ステータスコード
+  // 成功すれば200になる
+  var code = response.getResponseCode();
+  Logger.log('Response code is "%s"', code);
+}
 function getGmailMessage() {
   var threads = GmailApp.search('is:unread subject:(Fuji Business International) has:attachment'); // Get all unread threads with the subject in inbox
   var records = '[';
@@ -40,30 +56,6 @@ function getGmailMessage() {
   Logger.log('Response JSON is "%s"', records);
   return records;
 }
-function sendToKintone() {
-  'use strict';
-  Logger.log('Function called');
-  var subdomain = "2t48w.kintone.com";//サブドメイン名
-  var scriptProperties = PropertiesService.getScriptProperties();
-  var apps = {
-    YOUR_APPLICATION1: { appid: scriptProperties.getProperty('AppId'), name: "Contact from Gmail", token: scriptProperties.getProperty('ApiToken') }
-  };
-  var manager = new KintoneManager.KintoneManager(subdomain, apps);// ライブラリーの初期化
-  var records = JSON.parse(getGmailMessage());// JSON形式に変換
-  var response = manager.create("YOUR_APPLICATION1", records);//kintone レコードの生成
-  // ステータスコード
-  // 成功すれば200になる
-  var code = response.getResponseCode();
-  Logger.log('Response code is "%s"', code);
-}
-function replaceCharacters(str)
-{
-  return str
-  .replace(/"/g,"\'")
-  .replace(/\n/g, "\\n")
-  .replace(/\r/g, "\\r")
-  .replace(/\t/g, "\\t");
-}
 function uploadAttachment(attachment)
 {
   var blob = attachment.copyBlob();
@@ -86,4 +78,12 @@ function uploadAttachment(attachment)
     'payload' : formData
   };
   return UrlFetchApp.fetch('https://2t48w.kintone.com/k/v1/file.json', options);
+}
+function replaceCharacters(str)
+{
+  return str
+  .replace(/"/g,"\'")
+  .replace(/\n/g, "\\n")
+  .replace(/\r/g, "\\r")
+  .replace(/\t/g, "\\t");
 }
