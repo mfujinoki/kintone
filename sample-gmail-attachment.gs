@@ -1,11 +1,9 @@
-'use strict'
 var scriptProperties = PropertiesService.getScriptProperties();
 var subdomain = scriptProperties.getProperty('Subdomain');
 var appId = scriptProperties.getProperty('AppId');
 var apiToken = scriptProperties.getProperty('ApiToken');
 
 function replaceCharacters(str) {
-    'use strict';
     return str
     .replace(/"/g, "\'")
     .replace(/\n/g, "\\n")
@@ -13,7 +11,6 @@ function replaceCharacters(str) {
     .replace(/\t/g, "\\t");
 }
 function uploadAttachment(attachment) {
-    'use strict';
     var blob = attachment.copyBlob();
     // Make a POST request with form data.
     var formData = {
@@ -35,7 +32,6 @@ function uploadAttachment(attachment) {
     return UrlFetchApp.fetch('https://' + subdomain + '.cybozu.com/k/v1/file.json', options);
 }
 function getGmailMessage() {
-    'use strict';
     // Get all unread threads with the subject in inbox
     var threads = GmailApp.search('is:unread subject:(Fuji Business International) has:attachment');
     var records = '[';
@@ -79,7 +75,6 @@ function getGmailMessage() {
     return records;
 }
 function sendToKintone() {
-    'use strict';
     Logger.log('Function called');
 
     var apps = {
