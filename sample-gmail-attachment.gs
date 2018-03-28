@@ -84,9 +84,14 @@ function sendToKintone() {
     };
     var manager = new KintoneManager.KintoneManager(subdomain, apps);// ライブラリーの初期化
     var records = JSON.parse(getGmailMessage());// JSON形式に変換
-    var response = manager.create("YOUR_APPLICATION1", records);//kintone レコードの生成
-    // ステータスコード
-    // 成功すれば200になる
-    var code = response.getResponseCode();
-    Logger.log('Response code is "%s"', code);
+    if (records.length > 0){//レコードが存在するときのみ生成
+      var response = manager.create("YOUR_APPLICATION1", records);//kintone レコードの生成
+      // ステータスコード
+      // 成功すれば200になる
+      var code = response.getResponseCode();
+      Logger.log('Response code is "%s"', code);
+    }
+    else {
+      Logger.log('No record found');
+    }
 }
