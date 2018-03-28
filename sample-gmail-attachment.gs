@@ -1,3 +1,9 @@
+'use strict'
+var scriptProperties = PropertiesService.getScriptProperties();
+var subdomain = scriptProperties.getProperty('Subdomain');
+var appId = scriptProperties.getProperty('AppId');
+var token = scriptProperties.getProperty('ApiToken');
+
 function replaceCharacters(str) {
     'use strict';
     return str
@@ -13,10 +19,9 @@ function uploadAttachment(attachment) {
     var formData = {
         'file': blob
     };
-    var scriptProperties = PropertiesService.getScriptProperties();
     var formHeader = {
         'X-Requested-With': 'XMLHttpRequest',
-        'X-Cybozu-API-Token': scriptProperties.getProperty('ApiToken')
+        'X-Cybozu-API-Token': token
     };
     // Because payload is a JavaScript object, it will be interpreted as
     // as form data. (No need to specify contentType; it will automatically
@@ -27,7 +32,7 @@ function uploadAttachment(attachment) {
         'headers': formHeader,
         'payload': formData
     };
-    return UrlFetchApp.fetch('https://2t48w.kintone.com/k/v1/file.json', options);
+    return UrlFetchApp.fetch('https://' + subdomain + '.cybozu.com/k/v1/file.json', options);
 }
 function getGmailMessage() {
     'use strict';
@@ -76,15 +81,14 @@ function getGmailMessage() {
 function sendToKintone() {
     'use strict';
     Logger.log('Function called');
-    var subdomain = "2t48w.kintone.com";//サブドメイン名
-    var scriptProperties = PropertiesService.getScriptProperties();
+
     var apps = {
-        YOUR_APPLICATION1: { appid: scriptProperties.getProperty('AppId'),
-            name: "Gmail問い合わせ", token: scriptProperties.getProperty('ApiToken') }
+        YOUR_APPLICATION1: { appid: appId,
+            name: "Gメール問い合わせ", token: token }
     };
     var manager = new KintoneManager.KintoneManager(subdomain, apps);// ライブラリーの初期化
     var records = JSON.parse(getGmailMessage());// JSON形式に変換
-    if (records.length > 0){//レコードが存在するときのみ生成
+    if (records.length > 0) { //レコードが存在するときのみ生成
       var response = manager.create("YOUR_APPLICATION1", records);//kintone レコードの生成
       // ステータスコード
       // 成功すれば200になる
