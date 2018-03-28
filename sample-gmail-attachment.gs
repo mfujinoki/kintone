@@ -2,7 +2,7 @@
 var scriptProperties = PropertiesService.getScriptProperties();
 var subdomain = scriptProperties.getProperty('Subdomain');
 var appId = scriptProperties.getProperty('AppId');
-var token = scriptProperties.getProperty('ApiToken');
+var apiToken = scriptProperties.getProperty('ApiToken');
 
 function replaceCharacters(str) {
     'use strict';
@@ -21,7 +21,7 @@ function uploadAttachment(attachment) {
     };
     var formHeader = {
         'X-Requested-With': 'XMLHttpRequest',
-        'X-Cybozu-API-Token': token
+        'X-Cybozu-API-Token': apiToken
     };
     // Because payload is a JavaScript object, it will be interpreted as
     // as form data. (No need to specify contentType; it will automatically
@@ -84,7 +84,7 @@ function sendToKintone() {
 
     var apps = {
         YOUR_APPLICATION1: { appid: appId,
-            name: "Gメール問い合わせ", token: token }
+            name: "Gメール問い合わせ", token: apiToken }
     };
     var manager = new KintoneManager.KintoneManager(subdomain, apps);// ライブラリーの初期化
     var records = JSON.parse(getGmailMessage());// JSON形式に変換
