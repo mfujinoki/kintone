@@ -5,7 +5,7 @@
     var idList = '5adf7f268a838ad62e5d9781';//List ID
     var trelloURL = 'https://api.trello.com';//Trello API URL
     var kintoneURL = 'https://devxorudc.cybozu.com';//kintone ドメイン
-    
+
     /*Trelloへの添付ファイルアップロード関数*/
     function uploadFile(id, fileName, blob) {
         var formData = new FormData();//FormDataのオブジェクト作成
@@ -47,7 +47,7 @@
     }
 
     kintone.events.on(['app.record.detail.process.proceed'], function(event) {//プロセスの変更時のトリガーイベント
-            //ステータスが承認されたら実行
+            //ステータスが承認なら実行
             if (event.nextStatus.value === '承認') {
                 //レコードのデータの取得
                 var rec = event.record;
@@ -89,5 +89,5 @@
                     });
                 }
             }
-        });
+    });
 })();
