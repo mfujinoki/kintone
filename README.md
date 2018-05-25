@@ -1,1 +1,0 @@
-# kintone sample codes
