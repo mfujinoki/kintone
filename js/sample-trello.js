@@ -1,10 +1,10 @@
 (function() {
     'use strict';
-    var key = '8e9d3d79fb998bec392d4619c591e11e';//Trello API key
-    var token = '5e6eff83c066eb1c4a72d1afe84d93ae95b6f27f52ce8dbaac979f37343356a0';//Trello Token
+    var key = config.TRELLO_API_KEY;//Trello API key
+    var token = config.TRELLO_API_TOKEN;//Trello Token
     var idList = '5adf7f268a838ad62e5d9781';//List ID
     var trelloURL = 'https://api.trello.com';//Trello API URL
-    var kintoneURL = 'https://devxorudc.cybozu.com';//kintone ドメイン
+    var kintoneURL = config.KINTONE_URL;//kintone ドメイン
 
     /*Trelloへの添付ファイルアップロード関数*/
     function uploadFile(id, fileName, blob) {
