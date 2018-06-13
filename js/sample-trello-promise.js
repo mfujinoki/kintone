@@ -4,45 +4,59 @@
     var token = config.TRELLO_API_TOKEN;//Trello Token
     var idList = '5adf7f268a838ad62e5d9781';//List ID
     var trelloURL = 'https://api.trello.com';//Trello API URL
-    var kintoneDomain = config.KINTONE_DOMAIN;//kintone ドメイン
 
     /*Trelloへの添付ファイルアップロード関数*/
-    function uploadFile(id, fileName, blob) {
-        var formData = new FormData();//FormDataのオブジェクト作成
-        formData.append("file", blob, fileName);//ファイル内容とファイル名を設定
-        //Trello APIにより、添付ファイルをカードに追加
-        var url = trelloURL + '/1/cards/' + id + '/attachments?key=' + key + '&token=' + token;
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', url);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                // success
-                console.log(xhr.responseText);
-            } else {
-                // error
-                console.log(xhr.responseText);
-            }
-        };
-        xhr.send(formData);
+    function fileUpload(id, fileName, blob) {
+        return new Promise(function(resolve, reject) {
+            var formData = new FormData();//FormDataのオブジェクト作成
+            formData.append("file", blob , fileName);//ファイル内容とファイル名を設定
+            //Trello APIにより、添付ファイルをカードに追加
+            var url = trelloURL + '/1/cards/' + id + '/attachments?key=' + key + '&token=' + token;
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', url);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // successful
+                    console.log(xhr.responseText);
+                    resolve(xhr.response);
+                } else {
+                    // fails
+                    console.log(xhr.responseText);
+                    reject(Error('File upload error:' + xhr.statusText));
+                }
+            };
+            xhr.onerror = function() {
+                reject(Error('There was a file upload error.'));
+            };
+            xhr.send(formData);
+        });
     }
     /*kintoneの添付ファイルダウンロード関数*/
-    function getfile(id, fileName, fileKey) {
-        var xhr = new XMLHttpRequest();
-        var url = 'https://' + kintoneDomain + '/k/v1/file.json?fileKey=' + fileKey;//kintone API ファイルダウンロードメソッド
-        xhr.open('GET', url);
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.responseType = 'blob';//blog形式で取得
-        xhr.onload = function() {
-            if (xhr.status === 200) {//処理成功時のみ実行
-            // success
-                var blob = new Blob([xhr.response]);//ファイル内容の取得
-                uploadFile(id, fileName, blob);//ファイルアップロード関数の呼び出し
-            } else {
-              // error
-                console.log(xhr.responseText);
-            }
-        };
-        xhr.send();
+    function fileDownload(id, fileName, fileKey) {
+        return new Promise(function(resolve, reject) {
+            var url = kintone.api.url('/k/v1/file', true) + '?fileKey=' + fileKey;//kintone API ファイルダウンロードメソッド
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.responseType = 'blob';//blog形式で取得
+            xhr.onload = function() {
+                if (xhr.status === 200) {//処理成功時のみ実行
+                    // successful
+                    var blob = new Blob([xhr.response]);//ファイル内容の取得
+                    uploadFile(id, fileName, blob);//ファイルアップロード関数の呼び出し
+
+                    resolve(xhr.response);
+                } else {
+                    // fails
+                    console.log(xhr.responseText);
+                    reject(Error('File download error:' + xhr.statusText));
+                }
+            };
+            xhr.onerror = function() {
+                reject(Error('There was a file download error.'));
+            };
+            xhr.send();
+        });
     }
     kintone.events.on(['app.record.detail.process.proceed'], function(event) {//プロセスの変更時のトリガーイベント
             //ステータスが承認なら実行
