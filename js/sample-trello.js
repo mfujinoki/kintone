@@ -4,7 +4,6 @@
     var token = config.TRELLO_API_TOKEN;//Trello Token
     var idList = '5adf7f268a838ad62e5d9781';//List ID
     var trelloURL = 'https://api.trello.com';//Trello API URL
-    var kintoneDomain = config.KINTONE_DOMAIN;//kintone ドメイン
 
     /*Trelloへの添付ファイルアップロード関数*/
     function uploadFile(id, fileName, blob) {
@@ -28,7 +27,7 @@
     /*kintoneの添付ファイルダウンロード関数*/
     function getfile(id, fileName, fileKey) {
         var xhr = new XMLHttpRequest();
-        var url = 'https://' + kintoneDomain + '/k/v1/file.json?fileKey=' + fileKey;//kintone API ファイルダウンロードメソッド
+        var url = kintone.api.url('/k/v1/file', true) + '?fileKey=' + fileKey;//kintone API ファイルダウンロードメソッド
         xhr.open('GET', url);
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
         xhr.responseType = 'blob';//blog形式で取得
