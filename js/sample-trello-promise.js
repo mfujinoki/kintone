@@ -17,7 +17,7 @@
             xhr.onload = function() {
                 if (xhr.status === 200) {
                     // successful
-                    resolve(xhr.response);
+                    resolve(xhr.responseText);
                 } else {
                     // fails
                     reject(Error('File upload error:' + xhr.statusText));
@@ -34,7 +34,7 @@
         return new kintone.Promise(function(resolve, reject) {
             var xhr = new XMLHttpRequest();
             var params = {
-              "fileKey": fileKey
+                "fileKey": fileKey
             };
             var url = kintone.api.urlForGet('/k/v1/file', params);
             xhr.open('GET', url);
@@ -57,15 +57,16 @@
         });
     }
     //複数ファイルのダウンロード関数
-    function downloadFiles(files, fileNum){
-      var opt_fileNum = fileNum || 0;
-      return downloadFile(files[opt_fileNum].cardId, files[opt_fileNum].fileName, files[opt_fileNum].fileKey).then(function(blob){
-        uploadFile(files[opt_fileNum].cardId, files[opt_fileNum].fileName, blob);
-        opt_fileNum++;
-        if(opt_fileNum < files.length){
-          return downloadFiles(files, opt_fileNum);
-        }
-      });
+    function downloadFiles(files, fileNum) {
+        var opt_fileNum = fileNum || 0;
+        return downloadFile(files[opt_fileNum].cardId, files[opt_fileNum].fileName, files[opt_fileNum].fileKey).then(function(blob) {
+            return uploadFile(files[opt_fileNum].cardId, files[opt_fileNum].fileName, blob).then(function(resp) {
+                opt_fileNum++;
+                if (opt_fileNum < files.length) {
+                    return downloadFiles(files, opt_fileNum);
+                }
+            });
+        });
     }
     kintone.events.on(['app.record.detail.process.proceed'], function(event) {//プロセスの変更時のトリガーイベント
         //ステータスが承認なら実行
@@ -82,36 +83,38 @@
                 console.log(details);
 
                 //Trello APIで新規にカードを追加
-                kintone.proxy(trelloURL + '/1/cards?idList=' + idList + '&name=' + encodeURIComponent(to_do) +
-                '&desc=' + encodeURIComponent(details) + '&due=' + due_date + '&key=' + key + '&token=' + token,
-                'POST', {}, {}).then(function(args) {
-                    //success
-                    var responseBody = JSON.parse(args[0]);
-                    console.log(args[0]);
-                    var cardId = responseBody.id;//追加されたカードのIDを取得
-                    console.log(cardId);
-
-                    var attachments = rec.Attachments.value;//添付ファイルの取得
-                    if (attachments) {
-                        var files = [];
-                        for (var i = 0; i < attachments.length; i++) {
-                            var fileKey = attachments[i].fileKey;//添付ファイルのFile Keyを取得
-                            console.log('fileKey: ' + fileKey);
-                            var fileName = attachments[i].name;//添付ファイル名を取得
-                            console.log(fileName);
-                            var file = {};
-                            file['cardId'] = cardId;//カードのID
-                            file['fileKey'] = attachments[i].fileKey;//添付ファイルのFile Key
-                            file['fileName'] = attachments[i].name;//添付ファイル名
-                            files.push(file);
+                return kintone.proxy(trelloURL + '/1/cards?idList=' + idList + '&name=' + encodeURIComponent(to_do) +
+                    '&desc=' + encodeURIComponent(details) + '&due=' + due_date + '&key=' + key + '&token=' + token,
+                    'POST', {}, {}).then(function(args) {
+                        if (args[1] === 200) {
+                            //success
+                            var responseBody = JSON.parse(args[0]);
+                            var cardId = responseBody.id;//追加されたカードのIDを取得
+                            var attachments = rec.Attachments.value;//添付ファイルの取得
+                            if (attachments && attachments.length > 0) {
+                                var files = [];
+                                for (var i = 0; i < attachments.length; i++) {
+                                    var fileKey = attachments[i].fileKey;//添付ファイルのFile Keyを取得
+                                    console.log('fileKey: ' + fileKey);
+                                    var fileName = attachments[i].name;//添付ファイル名を取得
+                                    console.log(fileName);
+                                    var file = {};
+                                    file['cardId'] = cardId;//カードのID
+                                    file['fileKey'] = attachments[i].fileKey;//添付ファイルのFile Key
+                                    file['fileName'] = attachments[i].name;//添付ファイル名
+                                    files.push(file);
+                                }
+                                return downloadFiles(files);
+                            }
                         }
-                        return downloadFiles(files);
-                    }
-                }, function(error) {
-                    //error
-                    console.log(error);  //proxy APIのレスポンスボディ(文字列)を表示
-                });
+                    }, function(error) {
+                        //error
+                        console.log(error);  //proxy APIのレスポンスボディ(文字列)を表示
+                        event.error = error;
+                        Error(error);
+                    });
             }
         }
+        return event;
     });
 })();

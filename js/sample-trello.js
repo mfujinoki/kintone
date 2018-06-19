@@ -71,7 +71,7 @@
                         console.log(cardId);
 
                         var attachments = rec.Attachments.value;//添付ファイルの取得
-                        if (attachments) {
+                        if (attachments && attachments.length > 0) {
                             for (var i = 0; i < attachments.length; i++) {
                                 var fileKey = attachments[i].fileKey;//添付ファイルのFile Keyを取得
                                 console.log('fileKey: ' + fileKey);
