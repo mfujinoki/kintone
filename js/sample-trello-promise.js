@@ -36,7 +36,7 @@
             var params = {
                 "fileKey": fileKey
             };
-            var url = kintone.api.urlForGet('/k/v1/file', params);
+            var url = kintone.api.urlForGet('/k/v1/file', params);//kintoneのファイルダウンロードAPIのUrlを設定
             xhr.open('GET', url);
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.responseType = 'blob';//blog形式で取得
