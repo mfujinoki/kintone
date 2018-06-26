@@ -59,14 +59,15 @@
     //複数ファイルのダウンロード関数
     function downloadFiles(files, fileNum) {
         var opt_fileNum = fileNum || 0;
-        return downloadFile(files[opt_fileNum].cardId, files[opt_fileNum].fileName, files[opt_fileNum].fileKey).then(function(blob) {
-            return uploadFile(files[opt_fileNum].cardId, files[opt_fileNum].fileName, blob).then(function(resp) {
-                opt_fileNum++;
-                if (opt_fileNum < files.length) {
-                    return downloadFiles(files, opt_fileNum);
-                }
+        return downloadFile(files[opt_fileNum].cardId, files[opt_fileNum].fileName, files[opt_fileNum].fileKey)
+            .then(function(blob) {
+                return uploadFile(files[opt_fileNum].cardId, files[opt_fileNum].fileName, blob).then(function(resp) {
+                    opt_fileNum++;
+                    if (opt_fileNum < files.length) {
+                        return downloadFiles(files, opt_fileNum);
+                    }
+                });
             });
-        });
     }
     kintone.events.on(['app.record.detail.process.proceed'], function(event) {//プロセスの変更時のトリガーイベント
         //ステータスが承認以外なら処理中止
@@ -89,36 +90,36 @@
         //Trello APIで新規にカードを追加
         return kintone.proxy(trelloURL + '/1/cards?idList=' + idList + '&name=' + encodeURIComponent(to_do) +
             '&desc=' + encodeURIComponent(details) + '&due=' + due_date + '&key=' + key + '&token=' + token,
-            'POST', {}, {}).then(function(args) {
-                if (args[1] === 200) {
-                    //success
-                    var responseBody = JSON.parse(args[0]);
-                    var cardId = responseBody.id;//追加されたカードのIDを取得
-                    var attachments = rec.Attachments.value;//添付ファイルの取得
-                    if (attachments && attachments.length > 0) {
-                        var files = [];
-                        for (var i = 0; i < attachments.length; i++) {
-                            var fileKey = attachments[i].fileKey;//添付ファイルのFile Keyを取得
-                            console.log('fileKey: ' + fileKey);
-                            var fileName = attachments[i].name;//添付ファイル名を取得
-                            console.log(fileName);
-                            var file = {};
-                            file['cardId'] = cardId;//カードのID
-                            file['fileKey'] = attachments[i].fileKey;//添付ファイルのFile Key
-                            file['fileName'] = attachments[i].name;//添付ファイル名
-                            files.push(file);
-                        }
-                        return downloadFiles(files);
+        'POST', {}, {}).then(function(args) {
+            if (args[1] === 200) {
+                //success
+                var responseBody = JSON.parse(args[0]);
+                var cardId = responseBody.id;//追加されたカードのIDを取得
+                var attachments = rec.Attachments.value;//添付ファイルの取得
+                if (attachments && attachments.length > 0) {
+                    var files = [];
+                    for (var i = 0; i < attachments.length; i++) {
+                        var fileKey = attachments[i].fileKey;//添付ファイルのFile Keyを取得
+                        console.log('fileKey: ' + fileKey);
+                        var fileName = attachments[i].name;//添付ファイル名を取得
+                        console.log(fileName);
+                        var file = {};
+                        file['cardId'] = cardId;//カードのID
+                        file['fileKey'] = attachments[i].fileKey;//添付ファイルのFile Key
+                        file['fileName'] = attachments[i].name;//添付ファイル名
+                        files.push(file);
                     }
-                } else {
-                    event.error = args[0];
-                    return event;
+                    return downloadFiles(files);
                 }
-            }).catch(function(error) {
-                //error
-                console.log(error);
-                event.error = error;
+            } else {
+                event.error = args[0];
                 return event;
-            });
+            }
+        }).catch(function(error) {
+            //error
+            console.log(error);
+            event.error = error;
+            return event;
+        });
     });
 })();
