@@ -20,11 +20,11 @@
                     resolve(xhr.responseText);
                 } else {
                     // fails
-                    reject(new Error('File upload error:' + xhr.statusText));
+                    reject('File upload error:' + xhr.statusText);
                 }
             };
             xhr.onerror = function() {
-                reject(new Error('There was a file upload error.'));
+                reject('There was a file upload error.');
             };
             xhr.send(formData);
         });
@@ -47,11 +47,11 @@
                     resolve(blob);
                 } else {
                     // fails
-                    reject(new Error('File download error:' + xhr.statusText));
+                    reject('File download error:' + xhr.statusText);
                 }
             };
             xhr.onerror = function() {
-                reject(new Error('There was a file download error.'));
+                reject('There was a file download error.');
             };
             xhr.send();
         });
@@ -70,16 +70,14 @@
     }
     kintone.events.on(['app.record.detail.process.proceed'], function(event) {//プロセスの変更時のトリガーイベント
         //ステータスが承認以外なら処理中止
-        if (event.nextStatus.value !== '承認')
-        {
-          return event;
+        if (event.nextStatus.value !== '承認') {
+            return event;
         }
         //レコードのデータの取得
         var rec = event.record;
         //レコードがない場合、処理中止
-        if(!rec)
-        {
-          return event;
+        if (!rec) {
+            return event;
         }
         var to_do = rec.To_Do.value;//To Do名
         console.log(to_do);
@@ -112,20 +110,15 @@
                         }
                         return downloadFiles(files);
                     }
-                } else{
-                  event.error = args[0];
-                  return event;
+                } else {
+                    event.error = args[0];
+                    return event;
                 }
-            }, function(error) {
+            }).catch(function(error) {
                 //error
-                console.log(error);  //proxy APIのレスポンスボディ(文字列)を表示
+                console.log(error);
                 event.error = error;
                 return event;
-            }).catch(function(error){
-              //error
-              console.log(error.message);
-              event.error = error.message;
-              return event;
             });
     });
 })();
