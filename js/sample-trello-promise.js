@@ -104,9 +104,9 @@
                         var fileName = attachments[i].name;//添付ファイル名を取得
                         console.log(fileName);
                         var file = {};
-                        file['cardId'] = cardId;//カードのID
-                        file['fileKey'] = attachments[i].fileKey;//添付ファイルのFile Key
-                        file['fileName'] = attachments[i].name;//添付ファイル名
+                        file.cardId = cardId;//カードのID
+                        file.fileKey = attachments[i].fileKey;//添付ファイルのFile Key
+                        file.fileName = attachments[i].name;//添付ファイル名
                         files.push(file);
                     }
                     return downloadFiles(files);
