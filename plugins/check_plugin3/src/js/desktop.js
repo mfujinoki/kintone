@@ -32,15 +32,15 @@
         // Retrieve records from event variable
         var rec = event.record;
         // Initilize error
-        rec.CONFIG_ZIP.error = null;
+        rec[CONFIG_ZIP].error = null;
         // Validate Postal Code if exists
-        var zip_value = rec.CONFIG_ZIP.value;
+        var zip_value = rec[CONFIG_ZIP].value;
         if (zip_value) {
             if (zip_value.length > 0) {
                 // Verify if input matches defined pattern
                 if (!(zip_value.match(zip_pattern))) {
                     // Display errror if unmatched
-                    rec.CONFIG_ZIP.error = 'Please enter 7 digit alphanumeric value';
+                    rec[CONFIG_ZIP].error = 'Please enter 7 digit alphanumeric value';
                 }
             }
         }
@@ -53,16 +53,16 @@
         // Retrieve records from event object
         var rec = event.record;
         // Initialize error
-        rec.CONFIG_TEL.error = null;
+        rec[CONFIG_TEL].error = null;
 
         // Input check if exists
-        var tel_value = rec.CONFIG_TEL.value;
+        var tel_value = rec[CONFIG_TEL].value;
         if (tel_value) {
             if (tel_value.length > 0) {
                 // Verify if pattern matches
                 if (!(tel_value.match(tel_pattern))) {
                     // Display error if unmatched
-                    rec.CONFIG_TEL.error = 'Please enter 10 or 11 digit numeric value';
+                    rec[CONFIG_TEL].error = 'Please enter 10 or 11 digit numeric value';
                 }
             }
         }
@@ -75,9 +75,9 @@
         // Retrieve records from event object
         var rec = event.record;
         // Initialize error
-        rec.CONFIG_FAX.error = null;
+        rec[CONFIG_FAX].error = null;
         // Validate input if exists
-        var fax_value = rec.CONFIG_FAX.value;
+        var fax_value = rec[CONFIG_FAX].value;
         if (fax_value) {
             if (fax_value.length > 0) {
                 // Verify if pattern matches
@@ -96,9 +96,9 @@
         // Retrieve records from event object
         var rec = event.record;
         // Initialize error
-        rec.CONFIG_MAIL.error = null;
+        rec[CONFIG_MAIL].error = null;
         // Validate if exists
-        var mail_value = rec.CONFIG_MAIL.value;
+        var mail_value = rec[CONFIG_MAIL].value;
         if (mail_value) {
             if (mail_value.length > 0) {
                 // Verify if matches

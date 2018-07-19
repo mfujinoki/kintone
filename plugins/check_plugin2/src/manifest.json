@@ -24,7 +24,11 @@
       "css/config.css"
     ],
     "required_params": [
-      "message"
+      "zip", 
+      "tel", 
+      "fax", 
+      "mail", 
+      "mode"
     ]
   },
   "name": {
