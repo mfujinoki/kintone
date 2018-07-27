@@ -23,17 +23,17 @@
       "css/config.css"
     ],
     "required_params": [
-      "body",
-      "count"
+      "relatedRecords",
+      "numberSpace"
     ]
   },
   "name": {
-    "en": "Character count"
+    "en": "Display total number of related records"
   },
   "description": {
-    "en": "This sample code counts the number of characters in a text field. Spaces in the text field are excluded from the count. The final count value is set into a number field."
+    "en": "This sample code counts the number of records in related records field and displays the number in a Space field of your App."
   },
   "homepage_url": {
-    "en": "https://developer.kintone.io/hc/en-us/articles/115008120767"
+    "en": "https://developer.kintone.io/hc/en-us/articles/115009390167"
   }
 }

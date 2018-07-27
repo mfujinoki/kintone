@@ -28,12 +28,12 @@
     ]
   },
   "name": {
-    "en": "Character count"
+    "en": "Input date with a button click"
   },
   "description": {
-    "en": "This sample code counts the number of characters in a text field. Spaces in the text field are excluded from the count. The final count value is set into a number field."
+    "en": "This sample inserts today's date into a Date field of your App with a click of a button."
   },
   "homepage_url": {
-    "en": "https://developer.kintone.io/hc/en-us/articles/115008120767"
+    "en": "https://developer.kintone.io/hc/en-us/articles/115005327527"
   }
 }
