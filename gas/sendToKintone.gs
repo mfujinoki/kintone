@@ -5,18 +5,17 @@ function getFormResponse(e) {
     records += Utilities.formatString('{"Email": { "value": "%s" }', e.response.getRespondentEmail());//回答者のEmailアドレスの取得
     for (var i = 0; i < itemResponses.length; i++) {
         var itemResponse = itemResponses[i];
-        records += ',';
         switch (itemResponse.getItem().getTitle()) {
-            case "参加しますか?":
-                records += Utilities.formatString('"attend" : { "value": "%s" }',
+            case "参加しますか？":
+                records += Utilities.formatString(',"attend" : { "value": "%s" }',
                 itemResponse.getResponse());//質問に対する回答を取得
                 break;
             case "参加人数":
-                records += Utilities.formatString('"number_of_attendee" : { "value": "%s" }',
+                records += Utilities.formatString(',"number_of_attendee" : { "value": "%s" }',
                 itemResponse.getResponse());//質問に対する回答を取得
                 break;
             case "参加者の名前を記入してください":
-                records += Utilities.formatString('"name_of_attendee" : { "value": "%s" }',
+                records += Utilities.formatString(',"name_of_attendee" : { "value": "%s" }',
                 itemResponse.getResponse());//質問に対する回答を取得
                 break;
         }
