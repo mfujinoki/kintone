@@ -1,10 +1,11 @@
 /*
- * This sample code counts the number of records in related records field 
+ * This sample code counts the number of records in related records field
  * and displays the number in a Space field of your App.
  * Copyright (c) 2018 Cybozu
  *
  * Licensed under the MIT License
  */
+jQuery.noConflict();
 (function(PLUGIN_ID) {
     'use strict';
 
@@ -19,9 +20,9 @@
     var CONFIG_SPACE = CONFIG.numberSpace;
 
     // Field codes of the fields set for the Fetch Criteria of the Related Records field
-    var FETCH_CRITERIA_A = 'contact_name'; // Field code of the field in this App
-    var FETCH_CRITERIA_B = 'contact_name'; // Field code of the field in the datasource App
-    
+    var FETCH_CRITERIA_A = CONFIG.fetch_criteria_a; // Field code of the field in this App
+    var FETCH_CRITERIA_B = CONFIG.fetch_criteria_b; // Field code of the field in the datasource App
+
     kintone.events.on('app.record.detail.show', function(event) {
         // Get all records related to the related records field
         function fetchRecords(opt_Field, opt_offset, opt_limit, opt_records) {
@@ -38,11 +39,11 @@
                 return allRecords;
             });
         }
-    
+
         // Create query based on the Filter settings for the related records field
         var keyValue = event.record[FETCH_CRITERIA_A].value;
         var opt_Field = FETCH_CRITERIA_B + '=' + '"' + keyValue + '"';
-    
+
         fetchRecords(opt_Field).then(function(records) {
             // Insert the total number of records into the Space field
             var num = records.length;
