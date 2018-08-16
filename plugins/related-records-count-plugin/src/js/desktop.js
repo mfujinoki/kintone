@@ -5,7 +5,6 @@
  *
  * Licensed under the MIT License
  */
-jQuery.noConflict();
 (function(PLUGIN_ID) {
     'use strict';
 

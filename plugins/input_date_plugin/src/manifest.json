@@ -4,7 +4,6 @@
   "type": "APP",
   "desktop": {
     "js": [
-      "https://js.kintone.com/jquery/3.3.1/jquery.min.js",
       "js/desktop.js"
     ],
     "css": [
