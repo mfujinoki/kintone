@@ -5,9 +5,6 @@
   "desktop": {
     "js": [
       "js/desktop.js"
-    ],
-    "css": [
-      "css/51-modern-default.css"
     ]
   },
   "icon": "image/icon.png",

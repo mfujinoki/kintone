@@ -19,17 +19,17 @@
       "css/config.css"
     ],
     "required_params": [
-      "date",
-      "space"
+      "table_row",
+      "row_count"
     ]
   },
   "name": {
-    "en": "Input date with a button click"
+    "en": "Count table rows plugin"
   },
   "description": {
-    "en": "This sample inserts today's date into a Date field of your App with a click of a button."
+    "en": "This sample code counts the number of rows you have in your table, and places that number in a given field, when you save your record data."
   },
   "homepage_url": {
-    "en": "https://developer.kintone.io/hc/en-us/articles/115005327527"
+    "en": "https://developer.kintone.io/hc/en-us/articles/115003487808"
   }
 }
