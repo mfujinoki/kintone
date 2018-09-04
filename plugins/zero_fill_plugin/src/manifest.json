@@ -1,0 +1,35 @@
+{
+  "manifest_version": 1,
+  "version": 1,
+  "type": "APP",
+  "desktop": {
+    "js": [
+      "js/desktop.js"
+    ]
+  },
+  "icon": "image/icon.png",
+  "config": {
+    "html": "html/config.html",
+    "js": [
+      "https://js.kintone.com/jquery/3.3.1/jquery.min.js",
+      "js/config.js"
+    ],
+    "css": [
+      "css/51-modern-default.css",
+      "css/config.css"
+    ],
+    "required_params": [
+      "number",
+      "zeropad"
+    ]
+  },
+  "name": {
+    "en": "Zero-fill a number"
+  },
+  "description": {
+    "en": "This sample zero-fills a number, and sets it into another number field."
+  },
+  "homepage_url": {
+    "en": "https://developer.kintone.io/hc/en-us/articles/115005616028"
+  }
+}
