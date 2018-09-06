@@ -15,7 +15,8 @@
     }
 
     var NUMBER = CONFIG.number; //field code of number field
-    var ZEROFILL = CONFIG.zeropad; //field code of text field to set result into
+    var ZEROFILL = CONFIG.zerofilled; //field code of text field to set result into
+    var NUMOFDIGITS = Number(CONFIG.digits); //number of digits for the zero-filled number
 
     function zeroFill(value, length) {
         if (value.length >= length) { return value; }
@@ -27,7 +28,7 @@
     kintone.events.on(events, function(event) {
         var record = event.record;
         var changes = event.changes.field;
-        var length = 8; //number of digits for the zero-filled number
+        var length = NUMOFDIGITS; //number of digits for the zero-filled number
         record[ZEROFILL].value = zeroFill(changes.value, length);
         return event;
     });

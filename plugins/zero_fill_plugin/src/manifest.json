@@ -20,7 +20,8 @@
     ],
     "required_params": [
       "number",
-      "zeropad"
+      "zerofilled",
+      "digits"
     ]
   },
   "name": {
