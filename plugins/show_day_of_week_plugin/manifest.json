@@ -19,17 +19,17 @@
       "css/config.css"
     ],
     "required_params": [
-      "radio_button",
-      "default_value"
+      "date_field",
+      "name_of_days"
     ]
   },
   "name": {
-    "en": "Radio Button Validation Plug-in"
+    "en": "Show day of the week Plug-in"
   },
   "description": {
-    "en": "This sample code shows how to display error messages on kintone records. The user must choose a value for the radio button field other than the default value."
+    "en": "This sample code displays the day of the week next to the Date field."
   },
   "homepage_url": {
-    "en": "https://developer.kintone.io/hc/en-us/articles/115009412848"
+    "en": "https://developer.kintone.io/hc/en-us/articles/115005449567"
   }
 }
