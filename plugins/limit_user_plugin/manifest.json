@@ -1,0 +1,35 @@
+{
+  "manifest_version": 1,
+  "version": 1,
+  "type": "APP",
+  "desktop": {
+    "js": [
+      "js/desktop.js"
+    ]
+  },
+  "icon": "image/icon.png",
+  "config": {
+    "html": "html/config.html",
+    "js": [
+      "https://js.kintone.com/jquery/3.3.1/jquery.min.js",
+      "js/config.js"
+    ],
+    "css": [
+      "css/51-modern-default.css",
+      "css/config.css"
+    ],
+    "required_params": [
+      "user_selection",
+      "error_message"
+    ]
+  },
+  "name": {
+    "en": "1 user limit Plug-in"
+  },
+  "description": {
+    "en": "This sample plugin allows only one user to be selected in the User selection field."
+  },
+  "homepage_url": {
+    "en": "https://developer.kintone.io/hc/en-us/articles/115002475233"
+  }
+}
