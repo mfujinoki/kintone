@@ -1,8 +1,6 @@
 /*
  * This sample code calculates the total number of records with a given value,
  * and displays the total at the top of the record list page.
- * If the record list has a filter condition,
- * the calculation will take in account of the filter condition.
  * Copyright (c) 2018 Cybozu
  *
  * Licensed under the MIT License
