@@ -14,9 +14,8 @@
         return false;
     }
 
-    var config = CONFIG.number_field.split(',');
-    var TABLEFIELD = config[0]; //field code of the table
-    var NUMBERFIELD = config[1]; //field code of number field in the table
+    var TABLEFIELD = CONFIG.table_field; //field code of the table
+    var NUMBERFIELD = CONFIG.number_field; //field code of number field in the table
 
     var events = [
         'app.record.create.submit',
