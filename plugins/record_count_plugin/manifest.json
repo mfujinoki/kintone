@@ -7,11 +7,6 @@
       "js/desktop.js"
     ]
   },
-  "mobile":{
-    "js": [
-      "js/mobile.js"
-    ]
-  },
   "icon": "image/icon.png",
   "config": {
     "html": "html/config.html",
