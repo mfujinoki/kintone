@@ -19,7 +19,7 @@
     kintone.events.on(['app.record.detail.show'], function(event) {
         var record = event.record;
 
-        var weekchars = CONFIG.name_of_days.split(',');
+        var weekchars = JSON.parse(CONFIG.name_of_days);
         var date = new Date(record[DATE].value);
         var day = weekchars[date.getUTCDay()];
 
