@@ -17,6 +17,10 @@
         return false;
     }
 
+    function escapeHtml(htmlstr) {
+        return htmlstr.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
     var DROPDOWN = CONFIG.dropdown_field; //field code of dropdown field
     var DROPDOWN_CHOICE1 = CONFIG.dropdown_choice; //name of dropdown choice
 
@@ -34,7 +38,7 @@
             query: query,
             totalCount: true
         }, function(resp) {
-            kintone.app.getHeaderMenuSpaceElement().innerHTML = DROPDOWN_CHOICE1 + '：' + resp.totalCount;
+            kintone.app.getHeaderMenuSpaceElement().innerHTML = escapeHtml(DROPDOWN_CHOICE1) + '：' + resp.totalCount;
         });
     });
 })(kintone.$PLUGIN_ID);
