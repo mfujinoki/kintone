@@ -19,18 +19,17 @@
       "css/config.css"
     ],
     "required_params": [
-      "space",
-      "label",
-      "user"
+      "table_field",
+      "user_field"
     ]
   },
   "name": {
-    "en": "Add yourself Plug-in"
+    "en": "Table User Count Plug-in"
   },
   "description": {
-    "en": "This sample plugin adds yourself to a User selection field with a click of a button in the record details page."
+    "en": "This sample plugin counts the number of users listed inside the tables, and places that number in a given field, when you save your record data."
   },
   "homepage_url": {
-    "en": "https://developer.kintone.io/hc/en-us/articles/115007586287"
+    "en": "https://developer.kintone.io/hc/en-us/articles/115007851447"
   }
 }
