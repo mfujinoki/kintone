@@ -1,0 +1,36 @@
+{
+  "manifest_version": 1,
+  "version": 1,
+  "type": "APP",
+  "desktop": {
+    "js": [
+      "https://js.kintone.com/momentjs/2.22.1/moment-with-locales.min.js",
+      "js/desktop.js"
+    ]
+  },
+  "icon": "image/icon.png",
+  "config": {
+    "html": "html/config.html",
+    "js": [
+      "https://js.kintone.com/jquery/3.3.1/jquery.min.js",
+      "js/config.js"
+    ],
+    "css": [
+      "css/51-modern-default.css",
+      "css/config.css"
+    ],
+    "required_params": [
+      "locale",
+      "datetime_field"
+    ]
+  },
+  "name": {
+    "en": "Date from now plug-in"
+  },
+  "description": {
+    "en": "This sample plugin converts the date into a new format in the selected locale. The new format is placed in the Record List instead of the original date format."
+  },
+  "homepage_url": {
+    "en": "https://developer.kintone.io/hc/en-us/articles/115002348967"
+  }
+}
