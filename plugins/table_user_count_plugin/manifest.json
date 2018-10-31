@@ -13,12 +13,12 @@
     "js": [
       "https://js.kintone.com/jquery/3.3.1/jquery.min.js",
       "js/config.js",
-      "kintone-ui-component.min.js"
+      "js/kintone-ui-component.min.js"
     ],
     "css": [
       "css/51-modern-default.css",
       "css/config.css",
-      "kintone-ui-component.min.css"
+      "css/kintone-ui-component.min.css"
     ],
     "required_params": [
       "table_field",
