@@ -18,11 +18,10 @@ jQuery.noConflict();
                 var prop = resp.properties[key];
                 var $option = $('<option>');
 
-                if (prop.type === 'DATETIME' || prop.type === 'UPDATED_TIME') {
+                if (prop.type === 'DATETIME' || prop.type === 'UPDATED_TIME' || prop.type === 'CREATED_TIME') {
                     $option.attr('value', prop.code);
                     $option.text(prop.label);
                     $('#select_datetime_field').append($option.clone());
-                    break;
                 }
             }
             // Set default values
