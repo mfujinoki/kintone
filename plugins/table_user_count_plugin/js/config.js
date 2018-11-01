@@ -60,6 +60,12 @@ jQuery.noConflict();
 
         subtableSpace.appendChild(table.render());
 
+        // Set default values
+        if (CONF.user_count) {
+            var user_count = JSON.parse(CONF.user_count);
+            table.setValue(user_count);
+        }
+
         return table;
     }
 
@@ -75,10 +81,8 @@ jQuery.noConflict();
                     var value = table.getValue();//Get config values in table
                     var users = [];
                     value.forEach(rowData => {
-                        for (var cellData in rowData) {
-                            var user = { "login": cellData[0], "count": cellData[1]};
-                            users.push(user);
-                        }
+                        var user = [rowData[0], rowData[1]];
+                        users.push(user);
                     });
                     // Check requred fields
                     if (user_field === '' || users.length === 0) {
