@@ -103,7 +103,7 @@ jQuery.noConflict();
             var relatedRecords = $('#select_related_records_field').val();
             var space = $('#select_number_space_field').val();
 
-            // Check requred fields
+            // Check required fields
             if (relatedRecords === '' || space === '') {
                 alert('Please set required field(s)');
                 return;

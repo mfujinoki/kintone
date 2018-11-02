@@ -96,7 +96,7 @@ jQuery.noConflict();
             var date = $('#select_date_field').val();
             var space = $('#select_space_field').val();
 
-            // Check requred fields
+            // Check required fields
             if (date === '' || space === '') {
                 alert('Please set required field(s)');
                 return;

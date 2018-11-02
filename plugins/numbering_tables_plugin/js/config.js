@@ -46,7 +46,7 @@ jQuery.noConflict();
         $('#check-plugin-submit').click(function() {
             var config = [];
             var number_field = $('#select_number_field').val();
-            // Check requred fields
+            // Check required fields
             if (number_field === '') {
                 alert('Please set required field(s)');
                 return;

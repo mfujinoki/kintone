@@ -98,7 +98,7 @@ jQuery.noConflict();
             var label = $('#text-button-label').val();
             var user = $('#select_user_field').val();
 
-            // Check requred fields
+            // Check required fields
             if (space === '' || label === '' || user === '') {
                 alert('Please set required field(s)');
                 return;

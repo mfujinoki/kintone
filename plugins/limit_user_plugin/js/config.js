@@ -43,7 +43,7 @@ jQuery.noConflict();
             var config = [];
             var user_selection = $('#select_user_field').val();
             var error_message = $('#error_text').val();
-            // Check requred fields
+            // Check required fields
             if (user_selection === '' || error_message === '') {
                 alert('Please set required field(s)');
                 return;

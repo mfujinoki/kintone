@@ -55,7 +55,7 @@ jQuery.noConflict();
             var number = $('#select_number_field').val();
             var zerofilled = $('#select_zerofilled_field').val();
             var digits = $('#text_digits').val();
-            // Check requred fields
+            // Check required fields
             if (number === '' || zerofilled === '' || digits === '') {
                 alert('Please set required field(s)');
                 return;

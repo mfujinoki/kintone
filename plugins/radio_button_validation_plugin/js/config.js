@@ -46,7 +46,7 @@ jQuery.noConflict();
         $('#check-plugin-submit').click(function() {
             var config = [];
             var radio_button = $('#select_radio_button_field').val();
-            // Check requred fields
+            // Check required fields
             if (radio_button === '') {
                 alert('Please set required field(s)');
                 return;

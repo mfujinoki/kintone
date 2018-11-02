@@ -42,7 +42,7 @@ jQuery.noConflict();
             var config = [];
             var locale = $('#select_locale').val();
             var datetime = $('#select_datetime_field').val();
-            // Check requred fields
+            // Check required fields
             if (locale === '' || datetime === '') {
                 alert('Please set required field(s)');
                 return;

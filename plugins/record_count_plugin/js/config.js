@@ -65,7 +65,7 @@ jQuery.noConflict();
             var config = [];
             var dropdown_field = $('#select_dropdown_field').val();
             var dropdown_choice = $('#select_dropdown_value').val();
-            // Check requred fields
+            // Check required fields
             if (dropdown_field === '' || dropdown_choice === '' || dropdown_choice === null) {
                 alert('Please set required field(s)');
                 return;

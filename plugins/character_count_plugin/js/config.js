@@ -53,7 +53,7 @@ jQuery.noConflict();
             var body = $('#select_body_field').val();
             var count = $('#select_count_field').val();
 
-            // Check requred fields
+            // Check required fields
             if (body === '' || count === '') {
                 alert('Please set required field(s)');
                 return;

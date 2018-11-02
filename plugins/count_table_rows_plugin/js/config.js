@@ -52,7 +52,7 @@ jQuery.noConflict();
             var config = [];
             var table_row = $('#select_table_field').val();
             var row_count = $('#select_number_field').val();
-            // Check requred fields
+            // Check required fields
             if (table_row === '' || row_count === '') {
                 alert('Please set required field(s)');
                 return;

@@ -46,7 +46,7 @@ jQuery.noConflict();
             var config = [];
             var users = $('#select_user_field').val();
 
-            // Check requred fields
+            // Check required fields
             if (users === '') {
                 alert('Please set required field(s)');
                 return;
