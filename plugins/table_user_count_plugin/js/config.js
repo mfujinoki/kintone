@@ -4,9 +4,12 @@ jQuery.noConflict();
     // Get configuration settings
 
     var CONF = kintone.plugin.app.getConfig(PLUGIN_ID);
+    var user_fields = [];
+    user_fields.push(JSON.parse('{"label": "-----", "value": ""}'));
     var number_fields = [];
-    function setDropDown() {
-        // Retrieve field information, then set dropdown
+    number_fields.push(JSON.parse('{"label": "-----", "value": ""}'));
+    function getFields() {
+        // Retrieve field information
         return kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'GET',
             {'app': kintone.app.getId()}).then(function(resp) {
 
@@ -20,41 +23,50 @@ jQuery.noConflict();
                     case 'SUBTABLE':
                         for (var key2 in prop.fields) {
                             var field = prop.fields[key2];
-                            var $option = $('<option>');
                             if (field.type === 'USER_SELECT') {
                                 //Set table code and number field code
-                                $option.attr('value', prop.code + ',' + field.code);
-                                $option.text(field.label);
-                                $('#select_user_field').append($option.clone());
+                                user_fields.push(JSON.parse('{"label": "' + field.label +
+                                '", "value": "' + prop.code + ',' + field.code + '"}'));
                             }
                         }
                         break;
                     case "NUMBER":
                         number_fields.push(JSON.parse('{"label": "' + prop.label +
-                        '", "value": "' + prop.code + '", "isDisabled": false}'));
+                        '", "value": "' + prop.code + '"}'));
                         break;
                     default:
                         break;
                 }
             }
-            // Set default values
-            $('#select_user_field').val(CONF.table_field + ',' + CONF.user_field);
         }, function(resp) {
             return alert('Failed to retrieve field(s) information');
         });
     }
-    function setSubtable() {
+    function setUIComponent() {
+        // Get space info.
+        var dropdownSpace = document.getElementById('dropdown_space');
+        var user_dropdown = new kintoneUIComponent.Dropdown({
+            items: user_fields,
+            value: ''
+        });
+        dropdownSpace.appendChild(user_dropdown.render());
+        // Set default values
+        if (CONF.table_field && CONF.user_field) {
+            user_dropdown.setValue(CONF.table_field + ',' + CONF.user_field);
+        }
 
         // Get space info.
         var subtableSpace = document.getElementById('subtable_space');
 
         var text = new kintoneUIComponent.Text();
-        var dropdown = new kintoneUIComponent.Dropdown({
-            items: number_fields
+        text.setValue('');
+        var count_dropdown = new kintoneUIComponent.Dropdown({
+            items: number_fields,
+            value: ''
         });
 
         var table = new kintoneUIComponent.Table({
-            rowTemplate: [text, dropdown],
+            rowTemplate: [text, count_dropdown],
             header: ['Login Name', 'User Count Destination']
         });
 
@@ -66,26 +78,25 @@ jQuery.noConflict();
             table.setValue(user_count);
         }
 
-        return table;
+        return {dropdown: user_dropdown, table: table};
     }
 
     $(document).ready(function() {
-        // Set dropdown list
-        setDropDown()
-            .then(setSubtable)
-            .then(function(table) {
+        getFields() //Get fields info.
+            .then(setUIComponent) //Set UI Component
+            .then(function(components) {
                 // Set input values when 'Save' button is clicked
                 $('#check-plugin-submit').click(function() {
                     var config = [];
-                    var user_field = $('#select_user_field').val();
-                    var value = table.getValue();//Get config values in table
+                    var user_field = components.dropdown.getValue();//Get selected value for user field
+                    var value = components.table.getValue();//Get config values in table
                     var users = [];
                     value.forEach(rowData => {
                         var user = [rowData[0], rowData[1]];
                         users.push(user);
                     });
-                    // Check requred fields
-                    if (user_field === '' || users.length === 0) {
+                    // Check required fields
+                    if (user_field === '' || users[0][0] === '' || users[0][1] === '') {
                         alert('Please set required field(s)');
                         return;
                     }
