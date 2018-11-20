@@ -5,9 +5,9 @@ jQuery.noConflict();
 
     var CONF = kintone.plugin.app.getConfig(PLUGIN_ID);
     var user_fields = [];
-    user_fields.push(JSON.parse('{"label": "-----", "value": ""}'));
+    user_fields.push({"label": "-----", "value": ""});
     var number_fields = [];
-    number_fields.push(JSON.parse('{"label": "-----", "value": ""}'));
+    number_fields.push({"label": "-----", "value": ""});
     function getFields() {
         // Retrieve field information
         return kintone.api(kintone.api.url('/k/v1/preview/app/form/fields', true), 'GET',
@@ -25,14 +25,14 @@ jQuery.noConflict();
                             var field = prop.fields[key2];
                             if (field.type === 'USER_SELECT') {
                                 //Set table code and number field code
-                                user_fields.push(JSON.parse('{"label": "' + field.label +
-                                '", "value": "' + prop.code + ',' + field.code + '"}'));
+                                user_fields.push({"label": field.label,
+                                    "value": prop.code + ',' + field.code});
                             }
                         }
                         break;
                     case "NUMBER":
-                        number_fields.push(JSON.parse('{"label": "' + prop.label +
-                        '", "value": "' + prop.code + '"}'));
+                        number_fields.push({"label": prop.label,
+                            "value": prop.code });
                         break;
                     default:
                         break;
@@ -52,7 +52,13 @@ jQuery.noConflict();
         dropdownSpace.appendChild(user_dropdown.render());
         // Set default values
         if (CONF.table_field && CONF.user_field) {
-            user_dropdown.setValue(CONF.table_field + ',' + CONF.user_field);
+            user_dropdown.setValue('');
+            for (var i = 0; i < user_fields.length; i++) {
+                if (user_fields[i].value === CONF.table_field + ',' + CONF.user_field) {
+                    user_dropdown.setValue(CONF.table_field + ',' + CONF.user_field);
+                    break;
+                }
+            }
         }
 
         // Get space info.
@@ -75,6 +81,15 @@ jQuery.noConflict();
         // Set default values
         if (CONF.user_count) {
             var user_count = JSON.parse(CONF.user_count);
+            for (var j = 0; j < user_count.length; j++) {
+                var count_field = '';
+                for (var key in number_fields) {
+                    if (number_fields[key].value === user_count[j][1]) {
+                        count_field = user_count[j][1];
+                    }
+                }
+                user_count[j][1] = count_field;
+            }
             table.setValue(user_count);
         }
 
@@ -89,16 +104,23 @@ jQuery.noConflict();
                 $('#check-plugin-submit').click(function() {
                     var config = [];
                     var user_field = components.dropdown.getValue();//Get selected value for user field
-                    var value = components.table.getValue();//Get config values in table
+                    var values = components.table.getValue();//Get config values in table
                     var users = [];
-                    value.forEach(rowData => {
-                        var user = [rowData[0], rowData[1]];
+
+                    for (var i = 0; i < values.length; i++) {
+                        var user = [values[i][0], values[i][1]];
                         users.push(user);
-                    });
+                    }
                     // Check required fields
-                    if (user_field === '' || users[0][0] === '' || users[0][1] === '') {
+                    if (user_field === '') {
                         alert('Please set required field(s)');
                         return;
+                    }
+                    for (var j = 0; j < users.length; j++) {
+                        if (users[j][0] === '' || users[j][1] === '') {
+                            alert('Please set required field(s)');
+                            return;
+                        }
                     }
 
                     config.table_field = user_field.split(',')[0];//Set table field code

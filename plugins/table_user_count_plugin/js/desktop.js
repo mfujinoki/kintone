@@ -28,9 +28,9 @@
             user_count[j] = 0;
         }
 
-        for (var i = 0; num_of_rows.length > i; i++) {
+        for (var i = 0; i < num_of_rows.length; i++) {
             var num_of_users = num_of_rows[i].value[USERFIELD].value;
-            for (var cnt = 0; num_of_users.length > cnt; cnt++) {
+            for (var cnt = 0; cnt < num_of_users.length; cnt++) {
                 var user = num_of_users[cnt].code;
                 for (var k = 0; k < USERS.length; k++) {
                     if (user === USERS[k][0]) {
