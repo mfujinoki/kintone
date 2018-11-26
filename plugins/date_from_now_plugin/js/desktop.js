@@ -14,7 +14,9 @@
     if (!CONFIG) {
         return false;
     }
-
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     moment.locale(CONFIG.locale);	//initialize the locale
     var datetimefield = CONFIG.datetime_field;	//field code of a datetime field
 
@@ -26,7 +28,9 @@
         // Display text formatted by Moment.js instead of the initial dates
         for (var i = 0; i < e.records.length; i++) {
             var date = e.records[i][datetimefield].value;
-            elements[i].innerText = moment(date).fromNow();
+            elements[i].style.textAlign = 'center';
+            elements[i].style.verticalAlign = 'middle';
+            elements[i].innerText = capitalizeFirstLetter(moment(date).fromNow());
         }
     });
 })(kintone.$PLUGIN_ID);
