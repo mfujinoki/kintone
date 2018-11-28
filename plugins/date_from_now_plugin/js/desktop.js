@@ -28,8 +28,8 @@
         // Display text formatted by Moment.js instead of the initial dates
         for (var i = 0; i < e.records.length; i++) {
             var date = e.records[i][datetimefield].value;
-            elements[i].style.textAlign = 'center';
             elements[i].style.verticalAlign = 'middle';
+            elements[i].style.padding = '10px';
             elements[i].innerText = capitalizeFirstLetter(moment(date).fromNow());
         }
     });
