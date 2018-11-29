@@ -104,7 +104,7 @@ jQuery.noConflict();
                     }
                     // Check required fields
                     for (var j = 0; j < statuses.length; j++) {
-                        if (statuses[j] === '') {
+                        if (statuses[j][0] === '') {
                             alert('Please set required field(s)');
                             return;
                         }
