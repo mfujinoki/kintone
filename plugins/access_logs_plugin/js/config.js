@@ -44,7 +44,7 @@ jQuery.noConflict();
     function getAppName(app_id) {
         return kintone.api(kintone.api.url('/k/v1/app', true), 'GET', {id: app_id}, function(resp) {
             // success
-            $('#app_name').val(resp.name);
+            $('#app_name').text(resp.name);
         }, function(error) {
             // error
             return alert('Failed to retrieve app name information');
@@ -59,7 +59,7 @@ jQuery.noConflict();
                 .then(function() {
                     // Set default values
                     $('#app_id_text').val(CONF.app_id_text);
-                    $('#app_name').val(CONF.app_name);
+                    $('#app_name').text(CONF.app_name);
                     $('#select_app_id_field').val(CONF.app_id_dropdown);
                     $('#select_record_id_field').val(CONF.record_id_dropdown);
                 });
@@ -76,7 +76,7 @@ jQuery.noConflict();
                         if (app_id_text === CONF.app_id_text) {
                             // Set default values
                             $('#app_id_text').val(CONF.app_id_text);
-                            $('#app_name').val(CONF.app_name);
+                            $('#app_name').text(CONF.app_name);
                             $('#select_app_id_field').val(CONF.app_id_dropdown);
                             $('#select_record_id_field').val(CONF.record_id_dropdown);
                         }
@@ -88,7 +88,7 @@ jQuery.noConflict();
         $('#plugin-submit').click(function() {
             var config = [];
             var app_id_text = $('#app_id_text').val();
-            var app_name = $('#app_name').val();
+            var app_name = $('#app_name').text();
             var app_id_dropdown = $('#select_app_id_field').val();
             var record_id_dropdown = $('#select_record_id_field').val();
 

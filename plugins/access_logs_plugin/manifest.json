@@ -20,7 +20,6 @@
     ],
     "required_params": [
       "app_id_text",
-      "app_name",
       "app_id_dropdown",
       "record_id_dropdown"
     ]
