@@ -1,5 +1,6 @@
 /*
- * This sample zero-fills a number, and sets it into another number field.
+ * This sample plug-in adds records including App ID, Record ID, Accessed User,
+ * and Date time into an Access Log App using the Kintone REST API.
  * Copyright (c) 2018 Cybozu
  *
  * Licensed under the MIT License
