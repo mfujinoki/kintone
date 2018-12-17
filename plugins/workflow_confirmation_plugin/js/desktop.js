@@ -22,13 +22,13 @@
 
         //Only proceed if the current status matches selected status(es)
         var confirm = false;
-        for (var i = 0, max_length = STATUSES.length; i < max_length; i++) {
+        for (var i = 0; i < STATUSES.length; i++) {
             if (status === STATUSES[i][0]) {
                 confirm = true;
             }
         }
         if (!confirm) {
-            return (event);
+            return event;
         }
 
         //Display Sweet Alert message
