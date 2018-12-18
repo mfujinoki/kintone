@@ -28,7 +28,7 @@
     "en": "REST APIs Access Logs Plug-in"
   },
   "description": {
-    "en": "This sample plug-in adds records including App ID, Record ID, Accessed User, and Date time into an Access Log App using the Kintone REST API."
+    "en": "This sample plug-in adds records including App ID, Record ID, Accessed User, and Date time into an Access Log App using the Kintone REST API when the record detail is viewed."
   },
   "homepage_url": {
     "en": "https://developer.kintone.io/hc/en-us/articles/115005285388"

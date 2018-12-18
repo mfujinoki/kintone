@@ -1,6 +1,7 @@
 /*
  * This sample plug-in adds records including App ID, Record ID, Accessed User,
- * and Date time into an Access Log App using the Kintone REST API.
+ * and Date time into an Access Log App using the Kintone REST API
+ * when the record detail is viewed.
  * Copyright (c) 2018 Cybozu
  *
  * Licensed under the MIT License
@@ -24,13 +25,16 @@
         var appId = event.appId;
         // Get the Record ID
         var recordId = event.recordId;
+
+        //Set record details
+        var recordDetails = {};
+        recordDetails[APP_ID_FIELD] = { 'value': appId };
+        recordDetails[RECORD_ID_FIELD] = { 'value': recordId };
+
         // Request parameters as JSON
         var params = {
             'app': APP_ID, // Enter the App ID of App where the logs will be stored
-            'record': {
-                [APP_ID_FIELD]: { 'value': appId },
-                [RECORD_ID_FIELD]: { 'value': recordId }
-            }
+            'record': recordDetails
         };
 
         // Use the kintone REST API request to run kintone's Add Record API
@@ -45,5 +49,6 @@
                 // (do nothing)
             }
         );
+        return event;
     });
 })(kintone.$PLUGIN_ID);
