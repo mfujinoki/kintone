@@ -26,16 +26,13 @@
         // Get the Record ID
         var recordId = event.recordId;
 
-        //Set record details
-        var recordDetails = {};
-        recordDetails[APP_ID_FIELD] = { 'value': appId };
-        recordDetails[RECORD_ID_FIELD] = { 'value': recordId };
-
         // Request parameters as JSON
         var params = {
             'app': APP_ID, // Enter the App ID of App where the logs will be stored
-            'record': recordDetails
+            'record': {}
         };
+        params.record[APP_ID_FIELD] = { 'value': appId };
+        params.record[RECORD_ID_FIELD] = { 'value': recordId };
 
         // Use the kintone REST API request to run kintone's Add Record API
         kintone.api(
