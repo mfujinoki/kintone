@@ -32,16 +32,15 @@
         }
 
         if (isRead) { return event; }
-        var viewedUsers = {};
-        viewedUsers[VIEWEDUSERS] = {
-            "value": users.concat({
-                "code": myUserCode
-            })
-        };
         var param = {
             "app": kintone.app.getId(),
             "id": kintone.app.record.getId(),
-            "record": viewedUsers
+            "record": {}
+        };
+        param.record[VIEWEDUSERS] = {
+            "value": users.concat({
+                "code": myUserCode
+            })
         };
         kintone.api(kintone.api.url('/k/v1/record', true), 'PUT', param).then(function(resp) {
             location.reload();
