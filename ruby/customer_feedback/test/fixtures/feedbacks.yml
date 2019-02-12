@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  received_via: MyString
+  category: MyString
+  tenant_name: MyString
+  opinion: MyText
+
+two:
+  received_via: MyString
+  category: MyString
+  tenant_name: MyString
+  opinion: MyText

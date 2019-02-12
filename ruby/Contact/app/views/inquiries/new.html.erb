@@ -1,0 +1,43 @@
+
+<%#
+# RoR Webform View Sample
+# Copyright (c) 2018 Cybozu
+# Licensed under the MIT License
+%>
+
+<h1>お問い合わせ</h1>
+<%= form_for :inquiry, url: inquiries_path do |form| %>
+  <p>
+    <%= form.label :company_name, "会社名:" %><br>
+    <%= form.text_field :company_name %>
+  </p>
+  <p>
+    <%= form.label :client_name, "お名前:" %><br>
+    <%= form.text_field :client_name %>
+  </p>
+  <p>
+    <%= form.label :contact_type, "問い合わせ種別:" %><br>
+    <table style="border: 1px solid black;">
+      <tr>
+        <td>
+    <%= form.radio_button :contact_type, "製品について"%>
+    <%= form.label :product, "製品について" %>
+    <%= form.radio_button :contact_type, "受発注について"%>
+    <%= form.label :order, "受発注について" %>
+    <%= form.radio_button :contact_type, "お客様対応について"%>
+    <%= form.label :claim, "お客様対応について" %>
+    <%= form.radio_button :contact_type, "その他"%>
+    <%= form.label :misc, "その他" %>
+        </td>
+      </tr>
+    </table>
+  </p>
+  <p>
+    <%= form.label :details, "詳細:" %><br>
+    <%= form.text_area :details, size: "50x6" %>
+  </p>
+
+  <p>
+    <%= form.submit "送信" %>
+  </p>
+<% end %>
