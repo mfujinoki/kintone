@@ -1,0 +1,38 @@
+{
+  "manifest_version": 1,
+  "version": 1,
+  "type": "APP",
+  "desktop": {
+    "js": [
+      "js/desktop.js"
+    ],
+    "css": [
+      "css/51-modern-default.css"
+    ]
+  },
+  "icon": "image/date.png",
+  "config": {
+    "html": "html/config.html",
+    "js": [
+      "https://js.kintone.com/jquery/3.3.1/jquery.min.js",
+      "js/config.js"
+    ],
+    "css": [
+      "css/51-modern-default.css",
+      "css/config.css"
+    ],
+    "required_params": [
+      "date",
+      "space"
+    ]
+  },
+  "name": {
+    "en": "Date input button Plug-in"
+  },
+  "description": {
+    "en": "This sample inserts today's date into a Date field of your App with a click of a button."
+  },
+  "homepage_url": {
+    "en": "https://developer.kintone.io/hc/en-us/articles/360008693973"
+  }
+}
