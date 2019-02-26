@@ -11,6 +11,7 @@ jQuery.noConflict();
 
     function setDropDown() {
         // Retrieve field information, then set drop-down
+        // eslint-disable-next-line no-undef
         return KintoneConfigHelper.getFields().then(function(resp) {
             var $userDropDown = $('#select_user_field');
             var $spaceDropDown = $('#select_space_field');
