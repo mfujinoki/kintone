@@ -25,11 +25,18 @@
                         { text: '住所', value: 'Address.value' }
                     ],
                     customers: records,
-                    page: {}
+                    detailView: false,
+                    customer: null
                 };
             },
-            editItem(item, index) {
-                this.$store.dispatch('editOrder', {item, index});
+            methods: {
+                showDetail(item) {
+                    this.detailView = true;
+                    this.customer = item;
+                },
+                back() {
+                    this.detailView = false;
+                }
             }
         });
     });

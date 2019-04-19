@@ -1,0 +1,173 @@
+<div id="app">
+    <template v-if="!detailView">
+    <v-app>
+      <v-data-table
+        :headers="headers"
+        :items="customers"
+      >
+        <template v-slot:items="props">
+          <td>
+            <v-icon
+              @click="showDetail(props.item)"
+            >
+              edit
+            </v-icon>
+          </td>
+          <td>{{ props.item.record_no.value }}</td>
+          <td>{{ props.item.Company_name.value }}</td>
+          <td>{{ props.item.Department.value }}</td>
+          <td>{{ props.item.Representative.value }}</td>
+          <td>{{ props.item.Address.value }}</td>
+        </template>
+      </v-data-table>
+    <v-app>
+    </template>
+    <template v-else>
+    <v-app>
+      <v-container fluid>
+          <v-layout row justify-space-around>
+              <v-flex>
+                    <v-layout row justify-space-around>
+                        <v-flex md3>
+                        <v-text-field
+                            v-model="customer.Company_name.value"
+                            label="会社名"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                        <v-flex md3>
+                        <v-text-field
+                            v-model="customer.Department.value"
+                            label="部署名"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                        <v-flex md3>
+                        <v-text-field
+                            v-model="customer.Representative.value"
+                            label="担当者名"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row justify-space-around>
+                        <v-flex md3>
+                        <v-text-field
+                            v-model="customer.Zip_code.value"
+                            label="郵便番号"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                        <v-flex md3>
+                        <v-text-field
+                            v-model="customer.Phone.value"
+                            label="電話番号"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                        <v-flex md3>
+                        <v-text-field
+                            v-model="customer.Fax.value"
+                            label="Fax"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row justify-space-around>
+                        <v-flex md5>
+                        <v-text-field
+                            v-model="customer.Address.value"
+                            label="住所"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                        <v-flex md5>
+                        <v-text-field
+                            v-model="customer.Rank.value"
+                            label="Item Name"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row justify-space-around>
+                        <v-flex md10>
+                        <v-text-field
+                            v-model="customer.Mail.value"
+                            label="メールアドレス"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row justify-space-around>
+                        <v-flex md10>
+                        <v-text-field
+                            v-model="customer.Note.value"
+                            label="備考"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row justify-space-around>
+                        <v-flex md10>
+                        <v-text-field
+                            v-model="customer.record_no.value"
+                            label="レコード番号"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                    </v-layout>
+                    <v-layout row justify-space-around>
+                        <v-flex md5>
+                        <v-text-field
+                            v-model="customer.lat.value"
+                            label="緯度"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                        <v-flex md5>
+                        <v-text-field
+                            v-model="customer.lng.value"
+                            label="経度"
+                            disabled
+                            outline
+                        >
+                        </v-text-field>
+                        </v-flex>
+                    </v-layout>
+              </v-flex>
+          </v-layout>
+          <v-layout row justify-space-around>
+              <v-flex>
+                  <v-layout row justify-space-around>
+                  <v-btn large color="primary" @click="back">Back</v-btn>
+                  </v-layout>
+              </v-flex>
+          </v-layout>
+      </v-container>
+    </v-app>
+    </template>
+  </div>
