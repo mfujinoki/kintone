@@ -26,7 +26,8 @@
                     ],
                     customers: records,
                     detailView: false,
-                    customer: null
+                    customer: {},
+                    search: ''
                 };
             },
             methods: {
