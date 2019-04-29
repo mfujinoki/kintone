@@ -1,3 +1,9 @@
+/*
+ * vue.js + vuetify.js + Custom view sample css
+ * Copyright (c) 201９ Cybozu
+ *
+ * Licensed under the MIT License
+*/
 tbody tr:nth-of-type(odd) {
     background-color: rgba(0, 0, 0, .05);
   }

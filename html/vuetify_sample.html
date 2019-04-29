@@ -1,187 +1,191 @@
 <div id="app">
-    <template v-if="!detailView">
-    <v-app>
-        <v-container fluid>
-            <v-card>
-                <v-card-title>
-                    顧客一覧
-                    <v-spacer></v-spacer>
-                    <v-text-field
-                    v-model="search"
-                    append-icon="search"
-                    label="検索"
-                    single-line
-                    hide-details
-                    ></v-text-field>
-                </v-card-title>
-                <v-data-table
-                    :headers="headers"
-                    :items="customers"
-                    :search="search"
-                    class="elevation-1"
+<v-app>
+<v-content>
+<v-container fluid>
+<template v-if="!detailView">
+    <v-card>
+        <v-card-title>
+            顧客一覧
+            <v-spacer></v-spacer>
+            <v-text-field
+            v-model="search"
+            append-icon="search"
+            label="検索"
+            single-line
+            hide-details
+            ></v-text-field>
+        </v-card-title>
+        <v-data-table
+            :headers="headers"
+            :items="customers"
+            :search="search"
+            class="elevation-1"
+            :pagination.sync="pagination"
+            hide-actions
+        >
+            <template v-slot:items="props">
+            <td>
+                <v-icon 
+                    large
+                    color="primary"
+                    @click="showDetail(props.item)"
                 >
-                    <template v-slot:items="props">
-                    <td>
-                        <v-icon 
-                            large
-                            color="primary"
-                            @click="showDetail(props.item)"
-                        >
-                            pageview
-                        </v-icon>
-                    </td>
-                    <td>{{ props.item.record_no.value }}</td>
-                    <td>{{ props.item.Company_name.value }}</td>
-                    <td>{{ props.item.Department.value }}</td>
-                    <td>{{ props.item.Representative.value }}</td>
-                    <td>{{ props.item.Address.value }}</td>
-                    </template>
-                </v-data-table>
-            </v-card>
-        </v-container>
-    <v-app>
-    </template>
-    <template v-else>
-    <v-app>
-      <v-container fluid>
-          <v-layout justify-left>
-              <v-flex xs12 sm10 md8>
-                    <v-card>
-                        <v-card-title>
-                            顧客詳細
-                        </v-card-title>
-                        <v-card-text>
-                            <v-layout row justify-space-around>
-                                <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="customer.Company_name.value"
-                                    label="会社名"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="customer.Department.value"
-                                    label="部署名"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="customer.Representative.value"
-                                    label="担当者名"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                            </v-layout>
-                            <v-layout row justify-space-around>
-                                <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="customer.Zip_code.value"
-                                    label="郵便番号"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="customer.Phone.value"
-                                    label="電話番号"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md3>
-                                <v-text-field
-                                    v-model="customer.Fax.value"
-                                    label="Fax"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                            </v-layout>
-                            <v-layout row justify-space-around>
-                                <v-flex xs12 sm6 md5>
-                                <v-text-field
-                                    v-model="customer.Address.value"
-                                    label="住所"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md5>
-                                <v-text-field
-                                    v-model="customer.Rank.value"
-                                    label="Item Name"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                            </v-layout>
-                            <v-layout row justify-space-around>
-                                <v-flex xs12 md11>
-                                <v-text-field
-                                    v-model="customer.Mail.value"
-                                    label="メールアドレス"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                            </v-layout>
-                            <v-layout row justify-space-around>
-                                <v-flex xs12 md11>
-                                <v-text-field
-                                    v-model="customer.Note.value"
-                                    label="備考"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                            </v-layout>
-                            <v-layout row justify-space-around>
-                                <v-flex xs12 md11>
-                                <v-text-field
-                                    v-model="customer.record_no.value"
-                                    label="レコード番号"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                            </v-layout>
-                            <v-layout row justify-space-around>
-                                <v-flex xs12 sm6 md5>
-                                <v-text-field
-                                    v-model="customer.lat.value"
-                                    label="緯度"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md5>
-                                <v-text-field
-                                    v-model="customer.lng.value"
-                                    label="経度"
-                                    box
-                                >
-                                </v-text-field>
-                                </v-flex>
-                            </v-layout>
-                        </v-card-text>
-                        <v-divider></v-divider>
-                        <div class="text-xs-center">
-                            <v-card-actions>
-                                <v-layout justify-center>
-                                    <v-btn class="text-xs-center" large color="primary" @click="back">一覧に戻る</v-btn>
-                                </v-layout>
-                            </v-card-actions>
-                        </div>
-                    </v-card>
-              </v-flex>
-          </v-layout>
-      </v-container>
-    </v-app>
-    </template>
-  </div>
+                    pageview
+                </v-icon>
+            </td>
+            <td>{{ props.item.record_no.value }}</td>
+            <td>{{ props.item.Company_name.value }}</td>
+            <td>{{ props.item.Department.value }}</td>
+            <td>{{ props.item.Representative.value }}</td>
+            <td>{{ props.item.Address.value }}</td>
+            </template>
+        </v-data-table>
+        <div class="text-xs-center pt-2">
+            <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+        </div>
+    </v-card>
+</template>
+<template v-else>
+    <v-layout justify-left>
+        <v-flex xs12 sm10 md8>
+                <v-card>
+                    <v-card-actions>
+                        <v-layout justify-left>
+                            <v-btn class="text-xs-center" large outline color="primary" @click="back">一覧に戻る</v-btn>
+                            <v-btn class="text-xs-center" large color="primary" @click="save">変更を保存</v-btn>
+                        </v-layout>
+                    </v-card-actions>
+                    <v-divider></v-divider>
+                    <v-card-title>
+                        顧客詳細
+                    </v-card-title>
+                    <v-card-text>
+                        <v-layout row justify-space-around>
+                            <v-flex xs12 sm6 md3>
+                            <v-text-field
+                                v-model="customer.Company_name.value"
+                                label="会社名"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md3>
+                            <v-text-field
+                                v-model="customer.Department.value"
+                                label="部署名"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md3>
+                            <v-text-field
+                                v-model="customer.Representative.value"
+                                label="担当者名"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row justify-space-around>
+                            <v-flex xs12 sm6 md3>
+                            <v-text-field
+                                v-model="customer.Zip_code.value"
+                                label="郵便番号"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md3>
+                            <v-text-field
+                                v-model="customer.Phone.value"
+                                label="電話番号"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md3>
+                            <v-text-field
+                                v-model="customer.Fax.value"
+                                label="Fax"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row justify-space-around>
+                            <v-flex xs12 sm6 md5>
+                            <v-text-field
+                                v-model="customer.Address.value"
+                                label="住所"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md5>
+                            <v-select
+                                v-model="customer.Rank.value"
+                                :items="rankList"
+                                label="顧客ランク"
+                                box
+                                attach
+                            ></v-select>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row justify-space-around>
+                            <v-flex xs12 md11>
+                            <v-text-field
+                                v-model="customer.Mail.value"
+                                label="メールアドレス"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row justify-space-around>
+                            <v-flex xs12 md11>
+                            <v-text-field
+                                v-model="customer.Note.value"
+                                label="備考"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row justify-space-around>
+                            <v-flex xs12 md11>
+                            <v-text-field
+                                v-model="customer.record_no.value"
+                                label="レコード番号"
+                                disabled
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout row justify-space-around>
+                            <v-flex xs12 sm6 md5>
+                            <v-text-field
+                                v-model="customer.lat.value"
+                                label="緯度"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md5>
+                            <v-text-field
+                                v-model="customer.lng.value"
+                                label="経度"
+                                box
+                            >
+                            </v-text-field>
+                            </v-flex>
+                        </v-layout>
+                    </v-card-text>
+                </v-card>
+        </v-flex>
+    </v-layout>
+</template>
+</v-container>
+</v-content>
+</v-app>
+</div>
