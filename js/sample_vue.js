@@ -92,7 +92,7 @@
                         }
                     };
                     kintone.api(kintone.api.url('/k/v1/record', true), 'PUT', param).then(function(resp) {
-                        return event;
+                        alert('データが更新されました。');
                     }, function(err) {
                         alert(err.message);
                     });
