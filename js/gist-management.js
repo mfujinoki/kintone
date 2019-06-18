@@ -8,7 +8,7 @@
     "use strict";
     const app_id = kintone.app.getId(); // kintone App Idの取得
     const octokit = new Octokit({
-        auth: 'a09f1192fa8996a4038380da281ce643accc5ded',
+        auth: config.OCTOKIT_AUTH_TOKEN,
         log: console
     });
     hljs.initHighlightingOnLoad();// highlight.jsの初期化
