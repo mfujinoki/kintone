@@ -8,9 +8,11 @@
     "use strict";
     const app_id = kintone.app.getId(); // kintone App Idの取得
     const octokit = new Octokit({
-        auth: '7cd1eaed43ffe6719590cf16a5e8b352231f2973',
+        auth: 'a09f1192fa8996a4038380da281ce643accc5ded',
         log: console
     });
+    hljs.initHighlightingOnLoad();// highlight.jsの初期化
+
     // Gistの新規作成
     function createGist() {
         octokit.gists.create({
@@ -32,9 +34,10 @@
                     }
                 };
 
-                kintone.api(kintone.api.url('/k/v1/record', true), 'POST', param).then(function(resp) {
+                kintone.api(kintone.api.url('/k/v1/record', true), 'POST', param).then(function() {
                     alert('ID: ' + gist_id + ' でGistを作成しました。');
-                    location.href = gist_url;
+                    location.reload();
+                    open(gist_url);
                 }, function(error) {
                     if (error.message) {
                         alert(error.message);
@@ -49,18 +52,16 @@
     }
     // Gistのコンテンツ取得
     function getGist(gist_id) {
-        let gist_contents;
-        octokit.gists.get({ gist_id }
-        ).then(function(resp) {
+        return octokit.gists.get({
+            "gist_id": gist_id
+        }).then(function(resp) {
             if (resp.status === 200) { // Statusが200だと成功
-                gist_contents = resp.data;
-            } else {
-                alert('Gistの取得に失敗しました!');
+                return resp;
             }
+            alert('Gistの取得に失敗しました!');
         }).catch(function(err) {
             alert(err);
         });
-        return gist_contents;
     }
     kintone.events.on('app.record.index.show', function(event) {
         // 画面上部にボタンを設置
@@ -84,18 +85,39 @@
     kintone.events.on('app.record.detail.show',
         function(event) {
             // Gistのコンテンツを取得
-            let contents = getGist(event.record.gist_id.value);
-            kintone.app.record.getSpaceElement('gist_contents').appendChild(contents);
-            // Gist編集ボタンを設置
-            let gistButton = document.createElement('button');
-            gistButton.id = 'gist_button';
-            gistButton.innerHTML = 'Gist 編集';
-            gistButton.className = "button-simple-cybozu geo-search-btn";
-            gistButton.style = "margin-left: 30px; margin-top: 30px;";
-            gistButton.addEventListener('click', function(resp) {
-                location.href = contents.html_url;
-            });
-            kintone.app.record.getSpaceElement('button_space').appendChild(gistButton);
+            getGist(event.record.gist_id.value)
+                .then(function(resp) {
+                    let contents = resp.data;
+                    let gist_space = kintone.app.record.getSpaceElement('gist_contents');
+                    let description_label = document.createElement('label');
+                    if (contents.description) {
+                        description_label.innerHTML = contents.description;
+                    }
+                    gist_space.appendChild(description_label);
+
+                    for (let key in contents.files) {
+                        let fieldset = document.createElement('fieldset');
+                        let legend = document.createElement('legend');
+                        let pre = document.createElement('pre');
+                        let code = document.createElement('code');
+                        legend.innerHTML = contents.files[key].filename;
+                        fieldset.appendChild(legend);
+                        code.innerText = contents.files[key].content;
+                        pre.appendChild(code);
+                        fieldset.appendChild(pre);
+                        gist_space.appendChild(fieldset);
+                    }
+                    // Gist編集ボタンを設置
+                    let gistButton = document.createElement('button');
+                    gistButton.id = 'gist_button';
+                    gistButton.innerHTML = 'Gist 編集';
+                    gistButton.className = "button-simple-cybozu geo-search-btn";
+                    gistButton.style = "margin-left: 30px; margin-top: 30px;";
+                    gistButton.addEventListener('click', function() {
+                        open(contents.html_url);
+                    });
+                    kintone.app.record.getSpaceElement('button_space').appendChild(gistButton);
+                });
             return event;
         }
     );
