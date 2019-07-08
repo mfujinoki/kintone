@@ -8,9 +8,11 @@
     "use strict";
     const app_id = kintone.app.getId(); // kintone App Idの取得
     const octokit = new Octokit({
-        auth: config.OCTOKIT_AUTH_TOKEN,
+        //auth: config.OCTOKIT_AUTH_TOKEN,
+        auth: '0d75d496cc267036ac3dd37eca6fb925f4b547a6',
         log: console
     });
+
     hljs.initHighlightingOnLoad();// highlight.jsの初期化
 
     // Gistの新規作成
@@ -30,6 +32,9 @@
                     "record": {
                         "gist_id": {
                             "value": gist_id
+                        },
+                        "gist_url": {
+                            "value": gist_url
                         }
                     }
                 };
@@ -63,6 +68,7 @@
             alert(err);
         });
     }
+
     kintone.events.on('app.record.index.show', function(event) {
         // 画面上部にボタンを設置
         let gistButton = document.createElement('button');
@@ -79,12 +85,16 @@
     kintone.events.on(['app.record.create.show', 'app.record.edit.show', 'app.record.index.edit.show'],
         function(event) {
             event.record.gist_id.disabled = true;//Gist Idの編集を不可にする
+            event.record.gist_url.disabled = true;//Gist Urlの編集を不可にする
             return event;
         }
     );
     kintone.events.on('app.record.detail.show',
         function(event) {
             // Gistのコンテンツを取得
+            if (!event.record.gist_id.value) {
+                return event;
+            }
             getGist(event.record.gist_id.value)
                 .then(function(resp) {
                     let contents = resp.data;
@@ -107,7 +117,13 @@
                         fieldset.appendChild(pre);
                         gist_space.appendChild(fieldset);
                     }
+
+
                     // Gist編集ボタンを設置
+                    // 増殖バグ回避
+                    if (document.getElementById('gist_button') !== null) {
+                        return event;
+                    }
                     let gistButton = document.createElement('button');
                     gistButton.id = 'gist_button';
                     gistButton.innerHTML = 'Gist 編集';
@@ -119,6 +135,5 @@
                     kintone.app.record.getSpaceElement('button_space').appendChild(gistButton);
                 });
             return event;
-        }
-    );
+        });
 })();

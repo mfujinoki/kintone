@@ -9,7 +9,8 @@
     kintone.events.on("app.record.index.show", function(event) {
         if (event.viewId !== 5520055) {return event;} // 作成したカスタマイズビューのIDを指定
         var appId = kintone.app.getId();
-        return kintone.api(kintone.api.url('/k/v1/records', true), 'GET', {"app": appId }, function(resp) {
+        var query = kintone.app.getQuery();
+        kintone.api(kintone.api.url('/k/v1/records', true), 'GET', {'app': appId, 'query': query }, function(resp) {
             var vm = new Vue({
                 el: '#app',
                 data() {
@@ -107,7 +108,7 @@
                     }
                 }
             });
-            return event;
         });
+        return event;
     });
 })();
