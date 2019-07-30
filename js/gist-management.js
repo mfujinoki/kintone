@@ -8,12 +8,10 @@
     "use strict";
     const app_id = kintone.app.getId(); // kintone App Idの取得
     const octokit = new Octokit({
-        auth: config.OCTOKIT_AUTH_TOKEN,
-        //auth: '0d75d496cc267036ac3dd37eca6fb925f4b547a6',
+        //auth: config.OCTOKIT_AUTH_TOKEN,
+        auth: '3d0c80240d18d027b3ec31c5066590226f8763ab',
         log: console
     });
-
-    hljs.initHighlightingOnLoad();// highlight.jsの初期化
 
     // Gistの新規作成
     function createGist() {
@@ -104,12 +102,12 @@
                         description_label.innerHTML = contents.description;
                     }
                     gist_space.appendChild(description_label);
-
                     for (let key in contents.files) {
                         let fieldset = document.createElement('fieldset');
                         let legend = document.createElement('legend');
                         let pre = document.createElement('pre');
                         let code = document.createElement('code');
+                        code.className = 'prettyprint';
                         legend.innerHTML = contents.files[key].filename;
                         fieldset.appendChild(legend);
                         code.innerText = contents.files[key].content;
@@ -133,6 +131,7 @@
                         open(contents.html_url);
                     });
                     kintone.app.record.getSpaceElement('button_space').appendChild(gistButton);
+                    PR.prettyPrint();
                 });
             return event;
         });
