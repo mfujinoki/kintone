@@ -1,6 +1,6 @@
 /*
  * Gist Management sample program
- * Copyright (c) 201９ Cybozu
+ * Copyright (c) 2019 Cybozu
  *
  * Licensed under the MIT License
 */
@@ -39,7 +39,7 @@
                 kintone.api(kintone.api.url('/k/v1/record', true), 'POST', param).then(function() {
                     alert('ID: ' + gist_id + ' でGistを作成しました。');
                     location.reload();
-                    open(gist_url);
+                    window.open(gist_url);
                 }, function(error) {
                     if (error.message) {
                         alert(error.message);
@@ -127,10 +127,10 @@
                     gistButton.className = "button-simple-cybozu geo-search-btn";
                     gistButton.style = "margin-left: 30px; margin-top: 30px;";
                     gistButton.addEventListener('click', function() {
-                        open(contents.html_url);
+                        window.open(contents.html_url);
                     });
                     kintone.app.record.getSpaceElement('button_space').appendChild(gistButton);
-                    PR.prettyPrint();
+                    PR.prettyPrint();//コードのハイライト
                 });
             return event;
         });
