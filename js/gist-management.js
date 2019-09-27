@@ -8,7 +8,8 @@
     "use strict";
     const app_id = kintone.app.getId(); // kintone App Idの取得
     const octokit = new Octokit({
-        auth: config.OCTOKIT_AUTH_TOKEN,
+        //auth: config.OCTOKIT_AUTH_TOKEN,
+        auth: '01f3f88845fdb2495b6de2ce0df7d668c7332534',
         log: console
     });
 
