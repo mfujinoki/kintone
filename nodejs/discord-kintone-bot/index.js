@@ -1,18 +1,19 @@
 (function() {
     'use strict';
     const Discord = require('discord.js');
+    const config = require('../config.json');
     const client = new Discord.Client();
 
     const kintone = require('kintone-nodejs-sdk');
-    let APIToken = 'BiMy0eFANwIHwenzLgL7pZPk4QnZxSLSHBo2XdME';
+    let APIToken = config.KINTONE_API_TOKEN;
     let kintoneAuth = new kintone.Auth();
     kintoneAuth.setApiToken(APIToken);
 
-    let domainName = 'devxorudc.cybozu.com';
+    let domainName = config.KINTONE_DOMAIN;
     let kintoneConnection = new kintone.Connection(domainName, kintoneAuth);
 
     let kintoneRecord = new kintone.Record(kintoneConnection);
-    let appID = 126;
+    let appID = config.KINTONE_APP_ID;
 
 
     client.once('ready', () => {
@@ -53,5 +54,5 @@
         }
     });
 
-    client.login('NjAxODI3NTgyNDI1Njk0MjE4.Xa9Nlw.jVW7iZ78wTBHtxgF9kANEEHJacQ');
+    client.login(config.DISCORD_API_TOKEN);
 })();

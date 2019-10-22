@@ -8,3 +8,4 @@ package-lock.json
 plugins/Packages
 plugin-examples/
 ruby/
+nodejs/config.json
