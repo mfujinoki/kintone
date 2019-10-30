@@ -1,3 +1,9 @@
+/*
+ * Discord bot sample program
+ * Copyright (c) 2019 Cybozu
+ *
+ * Licensed under the MIT License
+*/
 (function() {
     'use strict';
     const Discord = require('discord.js');
