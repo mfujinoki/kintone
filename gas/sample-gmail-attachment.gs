@@ -44,30 +44,32 @@ function getGmailMessage() {
             if (message.isUnread() === true)
             {
               var attachments = message.getAttachments();
-              var fileKeys = '';
-              for (var k = 0; k < attachments.length; k++) {
-                Logger.log('Message "%s" contains the attachment "%s" (%s bytes)',
-                           message.getSubject(), attachments[k].getName(), attachments[k].getSize());
-                var fileKey = uploadAttachment(attachments[k]);
-                if (fileKey !== null) {
-                  fileKeys += fileKey + ',';
+              if (attachments.length > 0) {
+                var fileKeys = '';
+                for (var k = 0; k < attachments.length; k++) {
+                  Logger.log('Message "%s" contains the attachment "%s" (%s bytes)',
+                            message.getSubject(), attachments[k].getName(), attachments[k].getSize());
+                  var fileKey = uploadAttachment(attachments[k]);
+                  if (fileKey !== null) {
+                    fileKeys += fileKey + ',';
+                  }
                 }
-              }
-              records += Utilities.formatString('{"name": { "value": "%s" }',
-                                                replaceCharacters(message.getFrom()));//送信者の名前の取得
-              records += ',' + Utilities.formatString('"email" : { "value": "%s" }',
-                                                      replaceCharacters(message.getReplyTo()));//送信者のメールアドレス取得
-              records += ',' + Utilities.formatString('"subject" : { "value": "%s" }',
-                                                      replaceCharacters(message.getSubject()));//メール題目の取得
-              records += ',' + Utilities.formatString('"message" : { "value": "%s" }',
-                                                      replaceCharacters(message.getPlainBody()));//メッセージの取得
-              if (fileKeys.length > 0) {
-                if (fileKeys.match(',$')) {
-                  fileKeys = fileKeys.substring(0, fileKeys.length - 1);
+                records += Utilities.formatString('{"name": { "value": "%s" }',
+                                                  replaceCharacters(message.getFrom()));//送信者の名前の取得
+                records += ',' + Utilities.formatString('"email" : { "value": "%s" }',
+                                                        replaceCharacters(message.getReplyTo()));//送信者のメールアドレス取得
+                records += ',' + Utilities.formatString('"subject" : { "value": "%s" }',
+                                                        replaceCharacters(message.getSubject()));//メール題目の取得
+                records += ',' + Utilities.formatString('"message" : { "value": "%s" }',
+                                                        replaceCharacters(message.getPlainBody()));//メッセージの取得
+                if (fileKeys.length > 0) {
+                  if (fileKeys.match(',$')) {
+                    fileKeys = fileKeys.substring(0, fileKeys.length - 1);
+                  }
+                  records += ',' + Utilities.formatString('"Attachment":{"value":[ %s ]}', fileKeys);//File Keyの設定
                 }
-                records += ',' + Utilities.formatString('"Attachment":{"value":[ %s ]}', fileKeys);//File Keyの設定
+                records += '},';
               }
-              records += '},';
               message.markRead(); // Mark as read
             }
         }
