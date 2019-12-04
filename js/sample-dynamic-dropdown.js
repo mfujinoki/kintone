@@ -21,7 +21,7 @@
         ]
     });
     var body = {
-        'app': 97,
+        'app': kintone.app.getId(),
         'fields': [TEXTFIELD],
         'query': TEXTFIELD + ' != "" order by $id asc limit 500'
     };
