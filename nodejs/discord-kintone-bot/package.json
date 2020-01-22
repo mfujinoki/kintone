@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "@kintone/rest-api-client": "^0.3.0",
     "discord.js": "^11.5.1",
     "kintone-nodejs-sdk": "^0.1.2"
   },
