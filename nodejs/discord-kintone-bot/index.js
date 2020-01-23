@@ -1,6 +1,6 @@
 /*
  * Discord bot sample program
- * Copyright (c) 2019 Cybozu
+ * Copyright (c) 2020 Cybozu
  *
  * Licensed under the MIT License
 */
@@ -48,8 +48,7 @@
                         value: file_type
                     }
                 };
-                kintoneClient.record
-                    .addRecord({ app: appID, record: recordData})
+                kintoneClient.record.addRecord({ app: appID, record: recordData})
                     .then(resp => {
                         console.log(resp);
                     })
