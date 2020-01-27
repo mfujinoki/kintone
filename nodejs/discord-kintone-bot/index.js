@@ -12,9 +12,9 @@
 
     const { KintoneRestAPIClient } = require("@kintone/rest-api-client");
 
-    let domainName = config.KINTONE_DOMAIN;
-    let APIToken = config.KINTONE_API_TOKEN;
-    let appID = config.KINTONE_APP_ID;
+    const domainName = config.KINTONE_DOMAIN;
+    const APIToken = config.KINTONE_API_TOKEN;
+    const appID = config.KINTONE_APP_ID;
 
     const kintoneClient = new KintoneRestAPIClient({
         baseUrl: domainName,
