@@ -29,9 +29,9 @@
     discordClient.on('message', message => {
         if (message.attachments.size > 0) {
             message.attachments.forEach(function(attachment) {
-                let file_name = attachment.filename.split('.');
-                let file_type = file_name[file_name.length - 1];
-                let recordData = {
+                const file_name = attachment.filename.split('.');
+                const file_type = file_name[file_name.length - 1];
+                const recordData = {
                     file_link: {
                         value: attachment.url
                     },
