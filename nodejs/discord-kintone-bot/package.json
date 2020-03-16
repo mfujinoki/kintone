@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
+    "@cybozu/eslint-config": "^10.0.0",
     "@kintone/rest-api-client": "^0.3.0",
     "discord.js": "^11.5.1",
+    "eslint": "^6.8.0",
     "kintone-nodejs-sdk": "^0.1.2"
   },
   "devDependencies": {},
