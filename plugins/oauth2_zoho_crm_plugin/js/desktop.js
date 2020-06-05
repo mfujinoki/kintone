@@ -1,11 +1,20 @@
 /*
- * Zoho CRM Oauth2 sample program
+ * This sample plug-in calls Zoho CRM API via Oauth2 and sync data between Zoho CRM and kinotne app with a click of the button
+ *
  * Copyright (c) 2020 Cybozu
  *
  * Licensed under the MIT License
-*/
-(function() {
+ */
+(function(PLUGIN_ID) {
   'use strict';
+  // Get plug-in configuration settings
+  const CONFIG = kintone.plugin.app.getConfig(PLUGIN_ID);
+  if (!CONFIG) {
+    return;
+  }
+  // Get each config setting
+  const CONFIG_CLIENT_ID = CONFIG.client_id;
+  const CONFIG_CLIENT_SECRET = CONFIG.client_secret;
   // Records View Event
   kintone.events.on('app.record.index.show', (event) => {
     // Sync Records function
@@ -117,29 +126,28 @@
     }
 
     // const records = event.records;
-    const client_id = '1000.9F87O0N1RMNYR44DFVYVCFLC4W2RBH';
-    const client_secret = 'bede29ad1a96def77cddcb5a478ee75534caa983fc';
-    const params = 'scope=ZohoCRM.modules.all&&client_id=' + client_id + '&response_type=code&redirect_uri=' +
-                            encodeURIComponent('https://' + location.host + '/k/' + kintone.app.getId() + '/');
+    const params = 'scope=ZohoCRM.modules.all&&client_id=' + CONFIG_CLIENT_ID + '&response_type=code&redirect_uri=' +
+                                encodeURIComponent('https://' + location.host + '/k/' + kintone.app.getId() + '/');
     // Query String 取得
     const queryString = location.search;
     if (queryString.substr(0, 6) === '?code=') {
-      const authCode = queryString.substr(6);
-      if (!authCode) {
+      const authCode = queryString.substr(6).split('&');
+      if (!authCode[0]) {
         alert('Zoho CRMの認証情報取得に失敗しました。');
         return event;
       }
       // 読み取った認可コードを使って認証する
-      const body = 'grant_type=authorization_code' +
-            '&client_id=' + client_id +
-            '&client_secret=' + client_secret +
+      const data = 'grant_type=authorization_code' +
+            '&client_id=' + CONFIG_CLIENT_ID +
+            '&client_secret=' + CONFIG_CLIENT_SECRET +
             '&redirect_uri=' + encodeURIComponent('https://' + location.host + '/k/' + kintone.app.getId() + '/') +
-            '&code=' + authCode;
-      const header = {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      };
-
-      kintone.proxy('https://accounts.zoho.com/oauth/v2/token', 'POST', header, body).then((args) => {
+            '&code=' + authCode[0];
+      /*const data = {
+        'redirect_uri': encodeURIComponent('https://' + location.host + '/k/' + kintone.app.getId() + '/'),
+        'code': authCode[0]
+      };*/
+      kintone.plugin.app.proxy(PLUGIN_ID, 'https://accounts.zoho.com/oauth/v2/token', 'POST', {}, data).then((args) => {
+      // kintone.plugin.app.proxy(PLUGIN_ID, 'https://00ccae31749393ad06e510968f7805f5.m.pipedream.net', 'POST', {}, body).then((args) => {
         if (args[1] === 200) {
           // success
           const responseBody = JSON.parse(args[0]);
@@ -194,4 +202,4 @@
     kintone.app.getHeaderMenuSpaceElement().appendChild(button);
     return event;
   });
-})();
+})(kintone.$PLUGIN_ID);
