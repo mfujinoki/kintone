@@ -46,15 +46,16 @@
       const record = records[i];
       const name = record.last_name.value + ' ' + record.first_name.value;
       const company = record.company.value;
-      const detailLink = 'show#record=' + record.$id.value + '&l.view=' + event.viewId + '&l.q&l.next=1&l.prev=0';
+      const detailLink = 'show#record=' + record.$id.value + '&l.view=' + event.viewId + '&l.q&mode=show';// レコード詳細ページへのリンク
       const facebook = record.facebook.value;
       const linked_in = record.linked_in.value;
       const instagram = record.instagram.value;
-      const fileKey = record.profile_image.value.length > 0 ? record.profile_image.value[0].fileKey : null;
-      const imageUrl = await downLoadFile(fileKey);
+      const fileKey = record.profile_image.value.length > 0 ? record.profile_image.value[0].fileKey : null;// 添付ファイルがない場合、Nullを設定します。
+      const imageUrl = await downLoadFile(fileKey);// ファイルをダウンロードし、URLを生成。非同期なので、結果を待ちます。
       if (i % 6 === 0) {
-        cardView += '<div class="row">';
+        cardView += '<div class="row">';// １列に６レコード表示し、改行します。
       }
+      // １レコード毎にカードビューのHTMLを生成します。
       cardView += '<div class="cell-2">' +
         '<div class="card image-header float-left">' +
         '<div class="card-header fg-white"' +
@@ -72,14 +73,15 @@
         '</div>' +
         '</div>';
       if (i % 6 === 5 || i === max - 1) {
-        cardView += '</div>';
+        cardView += '</div>';// 行の最後にdivをクローズします。
       }
     }
-    const cardViewEl = document.getElementById('card-view');
+    const cardViewEl = document.getElementById('card-view');// カスタマイズビューのエレメントを取得
+    // 増殖防止
     while (cardViewEl.hasChildNodes()) {
       cardViewEl.removeChild(cardViewEl.firstChild);
     }
-    cardViewEl.innerHTML = cardView;
+    cardViewEl.innerHTML = cardView;// 生成したカードビューをカスタマイズビューに出力
   };
   // レコード一覧イベント
   kintone.events.on('app.record.index.show', (event) => {
