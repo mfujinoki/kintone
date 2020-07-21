@@ -7,10 +7,10 @@
 (function() {
   'use strict';
   /* ファイルダウンロード関数 (Promise)
-  * kintoneレコードの添付ファイルのfileKeyの値から、画像ファイルをダウンロード
-  * parameter: fileKey
-  * return: ファイルURL
-  */
+    * kintoneレコードの添付ファイルのfileKeyの値から、画像ファイルをダウンロード
+    * parameter: fileKey
+    * return: ファイルURL
+    */
   const downLoadFile = (fileKey) => {
     return new kintone.Promise((resolve, reject) => {
       if (fileKey !== null) {
@@ -35,10 +35,10 @@
       }
     });
   };
-  /* For Loop関数 (非同期)
-  * param: kintone event オブジェクト
-  * 各レコードによるCard Viewのエレメントの生成
-  */
+    /* For Loop関数 (非同期)
+    * param: kintone event オブジェクト
+    * 各レコードによるCard Viewのエレメントの生成
+    */
   const forLoop = async (event) => {
     const records = event.records;
     let cardView = '';
@@ -52,28 +52,26 @@
       const instagram = record.instagram.value;
       const fileKey = record.profile_image.value.length > 0 ? record.profile_image.value[0].fileKey : null;// 添付ファイルがない場合、Nullを設定します。
       const imageUrl = await downLoadFile(fileKey);// ファイルをダウンロードし、URLを生成。非同期なので、結果を待ちます。
-      if (i % 5 === 0) {
-        cardView += '<div class="row m-2">';// １列に5レコード表示し、改行します。
+      if (i % 6 === 0) {
+        cardView += '<div class="row">';// １列に６レコード表示し、改行します。
       }
       // １レコード毎にカードビューのHTMLを生成します。
-      cardView += '<div class="m-1 cell-2 border bd-light">' +
-        '<div class="card image-header float-left">' +
-          '<div class="card-header fg-white"' +
-            'style="background-image: url(' + imageUrl + ')">' +
+      cardView += '<div class="card-deck">' +
+          '<div class="card">' +
+            '<img class="card-img-top" src="' + imageUrl + '" alt="Card image">' +
+            '<div class="card-body">' +
+              '<h4 class="card-title">' + name + '</h4>' +
+              '<p class="card-text">' + company + '</p>' +
+              '<a href="' + detailLink + '" class="btn btn-primary"> 詳細 </a>' +
+            '</div>' +
+            '<div class="card-footer">' +
+              '<button class="button light" onclick="window.location.href=\'' + facebook + '\'"><i class="fab fa-facebook"></i></button>' +
+              '<button class="button light" onclick="window.location.href=\'' + linked_in + '\'"><ion-icon name="logo-linkedin"></ion-icon></button>' +
+              '<button class="button light" onclick="window.location.href=\'' + instagram + '\'"><ion-icon name="logo-instagram"></ion-icon></button>' +
+            '</div>' +
           '</div>' +
-        '</div>' +
-        '<div class="card-content p-2">' +
-          '<div class="name">' + name + '</div>' +
-          '<div class="title">' + company + '</div>' +
-          '<a href="' + detailLink + '" class="more"> 詳細 <span class="mif-arrow-right"></span></a>' +
-        '</div>' +
-        '<div class="card-footer">' +
-          '<button class="button light" onclick="window.location.href=\'' + facebook + '\'"><span class="mif-facebook"></span></button>' +
-          '<button class="button light" onclick="window.location.href=\'' + linked_in + '\'"><span class="mif-linkedin"></span></button>' +
-          '<button class="button light" onclick="window.location.href=\'' + instagram + '\'"><span class="mif-instagram"></span></button>' +
-        '</div>' +
-      '</div>';
-      if (i % 5 === 4 || i === max - 1) {
+        '</div>';
+      if (i % 6 === 5 || i === max - 1) {
         cardView += '</div>';// 行の最後にdivをクローズします。
       }
     }
@@ -84,9 +82,9 @@
     }
     cardViewEl.innerHTML = cardView;// 生成したカードビューをカスタマイズビューに出力
   };
-  // レコード一覧イベント
+    // レコード一覧イベント
   kintone.events.on('app.record.index.show', (event) => {
-    if (event.viewId !== 5684508) { // 作成したカスタマイズビューのIDを指定
+    if (event.viewId !== 5684516) { // 作成したカスタマイズビューのIDを指定
       return event;
     }
     try {
@@ -97,3 +95,4 @@
     return event;
   });
 })();
+  
