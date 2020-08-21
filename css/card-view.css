@@ -1,0 +1,14 @@
+*, ::after, ::before {
+  -webkit-box-sizing: revert;
+  box-sizing: revert;
+}
+.gaia-header-toolbar-mentioncounter {
+  position: initial;
+}
+.gaia-argoui-app-titlebar-content-wrapper {
+  line-height: initial;
+  font-size: initial;
+}
+.input-text-cybozu, input[type=text] {
+  font-family: unset;
+}
