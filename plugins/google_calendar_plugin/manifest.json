@@ -1,0 +1,36 @@
+{
+  "manifest_version": 1,
+  "version": 1,
+  "type": "APP",
+  "desktop": {
+    "js": [
+      "js/desktop.js"
+    ]
+  },
+  "icon": "image/icon.png",
+  "config": {
+    "html": "html/config.html",
+    "js": [
+      "https://js.cybozu.com/jquery/3.5.0/jquery.min.js",
+      "js/config.js"
+    ],
+    "css": [
+      "css/51-modern-default.css",
+      "css/config.css"
+    ],
+    "required_params": [
+      "client_id",
+      "calendar_id",
+      "redirect_uri"
+    ]
+  },
+  "name": {
+    "en": "Publish event record to Google Calendar Plug-in"
+  },
+  "description": {
+    "en": "This sample plug-in calls Google Calendar API via Oauth2 and publish event record to Google Caledar with a click of the button."
+  },
+  "homepage_url": {
+    "en": "https://cybozudev.zendesk.com/knowledge/articles/900002355163/"
+  }
+}

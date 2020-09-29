@@ -89,12 +89,12 @@
             'start': {
                 // 開始日・時刻
                 'dateTime': record.start_datetime.value,
-                'timezone': 'America/Los_Angeles'
+                'timeZone': 'America/Los_Angeles'
             },
             'end': {
                 // 終了日・時刻
                 'dateTime': record.end_datetime.value,
-                'timezone': 'America/Los_Angeles'
+                'timeZone': 'America/Los_Angeles'
             },
             // 場所の指定
             'location': record.event_location.value,
