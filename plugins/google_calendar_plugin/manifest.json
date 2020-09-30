@@ -25,10 +25,10 @@
     ]
   },
   "name": {
-    "en": "Publish event record to Google Calendar Plug-in"
+    "en": "Publish an event record to Google Calendar Plug-in"
   },
   "description": {
-    "en": "This sample plug-in calls Google Calendar API via Oauth2 and publish event record to Google Caledar with a click of the button."
+    "en": "This sample plug-in calls Google Calendar API via Oauth2 and publish an event record to Google Caledar with a click of the button."
   },
   "homepage_url": {
     "en": "https://cybozudev.zendesk.com/knowledge/articles/900002355163/"

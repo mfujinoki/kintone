@@ -1,5 +1,5 @@
 /*
- * This sample plug-in calls Google Calendar API via Oauth2 and publish event record to Google Caledar with a click of the button
+ * This sample plug-in calls Google Calendar API via Oauth2 and an publish event record to Google Caledar with a click of the button
  *
  * Copyright (c) 2020 Cybozu
  *
@@ -43,7 +43,7 @@
 
       let url = '';
       let method = '';
-      // リクエストメソッドとアクセストークンの設定
+      // リクエストメソッドとエンドポイントの設定
       if (record.event_id.value) { // 公開済みイベントを更新
         method = 'PUT';
         url = 'https://www.googleapis.com/calendar/v3/calendars/' +

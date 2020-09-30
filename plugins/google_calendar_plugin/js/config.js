@@ -58,7 +58,7 @@ jQuery.noConflict();
       $('#text-calendar-id').val(CONF.calendar_id);
       $('#text-redirect-uri').val(CONF.redirect_uri);
 
-      // OAuth 2.0 サーバーから送信されたページリクエストの確認のため、クエリーテキストを分析
+      // OAuth 2.0 サーバーから送信されたページリクエストの確認のため、クエリー文字列を分析
       const queryParams = {};
       const regex = /([^&=]+)=([^&]*)/g;
       let m;
@@ -67,7 +67,7 @@ jQuery.noConflict();
       }
       if (Object.keys(queryParams).length > 0) {
         const params = queryParams;
-        // アクセストークンが存在する場合、Google カレンダーにイベントを公開
+        // アクセストークンが存在する場合、プラグインに設定を保存
         if (queryParams.state && queryParams.state === 'request_from_kintone') {
           if (params && params.access_token) {
             const headers = {
