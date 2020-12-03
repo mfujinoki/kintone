@@ -1,7 +1,7 @@
 (function() {
   'use strict';
   // クライアントID
-  const client_id = '939234561653-rk43agh4ddrosveg2pn00v33h3uitelk.apps.googleusercontent.com';
+  const client_id = '1088614923410-96aas7hq0a6vr0jaku4hhalnm4fqtgfg.apps.googleusercontent.com';
   // コールバックURI
   const redirect_uri = 'https://devxorudc.cybozu.com/k/138/';
   // Hash後のクエリーパラメーター
