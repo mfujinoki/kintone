@@ -13,7 +13,7 @@
   // Discovery Docs
   const discovery_docs = ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'];
 
-  // APIクライアントライブラリーの初期化とサインイン
+  // APIクライアントライブラリの初期化とサインイン
   function initClient() {
     gapi.client.init({
       'apiKey': api_key,
@@ -25,7 +25,7 @@
     });
   }
 
-  // APIクライアントとOAuth2ライブラリーのロード
+  // APIクライアントとOAuth2ライブラリのロード
   gapi.load('client:auth2', initClient);
 
   // レコード詳細画面の表示後イベント
@@ -70,12 +70,12 @@
         'start': {
           // 開始日・時刻
           'dateTime': record.start_datetime.value,
-          'timeZone': 'America/Los_Angeles'
+          'timeZone': 'Asia/Tokyo'
         },
         'end': {
           // 終了日・時刻
           'dateTime': record.end_datetime.value,
-          'timeZone': 'America/Los_Angeles'
+          'timeZone': 'Asia/Tokyo'
         },
         // 場所の指定
         'location': record.event_location.value,
