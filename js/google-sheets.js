@@ -6,7 +6,7 @@
   const client_id = config.GOOGLE_SHEETS_CLIENT_ID;
   // スプレッドシートID
   const sheet_id = config.GOOGLE_SHEET_ID;
-  // 認証用URL（読み取り／更新）
+  // Google Sheets API スコープ
   const scope = 'https://www.googleapis.com/auth/spreadsheets';
   // Discovery Docs
   const discovery_docs = ['https://www.googleapis.com/discovery/v1/apis/sheets/v4/rest'];
@@ -64,7 +64,7 @@
       const productArray = [];
       if (record.見積明細.value.length > 0) {
         record.見積明細.value.forEach((item) => {
-          productArray.push([item.value.product_name.value, null, null, null, null, item.value.数量.value,item.value.単価.value]);
+          productArray.push([item.value.product_no.value, item.value.product_name.value, null, null, null, item.value.数量.value,item.value.単価.value]);
         });
       }
       // スプレッドシートに出力するデータの設定
@@ -72,8 +72,11 @@
         'valueInputOption': 'RAW',
         'data': [
           {
+            // 値を出力するシート範囲を設定します。（’シート名’!開始コラム:終了コラム）
             'range': '\'Invoice\'!A1:A6',
+            // 値を指定する方向を設定します。（ROWS | COLUMNS）
             'majorDimension': 'COLUMNS',
+            // majorDimessionにCOLUMNS を指定したので、 値の設定は、列ごとに行います。
             'values': [
               [record.customer_name.value + '様', record.company_name.value, record.postal_code.value, record.city.value, record.address.value, record.phone.value]
             ]
@@ -81,6 +84,7 @@
           {
             'range': '\'Invoice\'!F5:H7',
             'majorDimension': 'ROWS',
+            // ROWSを指定した場合、次のように列ごとに値を設定します。 'values' : [ [A1データ,B1データ], [A2データ,B2データ] ]
             'values': [
               [record.quote_no.value, null, record.date.value],
               [],
@@ -89,13 +93,6 @@
           },
           {
             'range': '\'Invoice\'!A12:A17',
-            'majorDimension': 'COLUMNS',
-            'values': [
-              [record.customer_name.value + '様', record.company_name.value, record.postal_code.value, record.city.value, record.address.value, record.phone.value]
-            ]
-          },
-          {
-            'range': '\'Invoice\'!F12:F17',
             'majorDimension': 'COLUMNS',
             'values': [
               [record.customer_name.value + '様', record.company_name.value, record.postal_code.value, record.city.value, record.address.value, record.phone.value]
