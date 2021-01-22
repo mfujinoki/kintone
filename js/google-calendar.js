@@ -3,9 +3,9 @@
   'use strict';
 
   // API キー
-  const api_key = config.GOOGLE_API_KEY;
+  const api_key = config.GOOGLE_CALENDAR_API_KEY;
   // クライアントID
-  const client_id = config.GOOGLE_CLIENT_ID;
+  const client_id = config.GOOGLE_CALENDAR_CLIENT_ID;
   // カレンダーID
   const calendar_id = config.GOOGLE_CALENDAR_ID;
   // 認証用URL（読み取り／更新）
