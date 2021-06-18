@@ -22,10 +22,17 @@
       kintone.api(kintone.api.url('/k/v1/record/comments', true), 'GET', body, (resp) => {
         // success
         let comments = '<br/>';
-        if (resp.comments.length == 0) {
+        if (resp.comments.length === 0) {
           return;
         }
-        for (let i = 0; i < 3; i++)
+        // 表示コメント数は、最大３
+        let maxLength = 0;
+        if (resp.comments.length < 3) {
+          maxLength = resp.comments.length;
+        } else {
+          maxLength = 3;
+        }
+        for (let i = 0; i < maxLength; i++)
         {
           let comment = resp.comments[i];
           let commentText = comment.text;
@@ -48,7 +55,6 @@
         console.log(error);
       });
     });
-    console.log(elements);  
     return event;
   });
 })();
