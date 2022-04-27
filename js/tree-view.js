@@ -36,12 +36,16 @@
                 valueField: "value",
                 categoryField: "name",
                 childDataField: "children",
-                nodePaddingOuter: 0,
+                nodePaddingOuter: 5,
                 nodePaddingInner: 0
                 })
             );
             series.rectangles.template.setAll({
-                strokeWidth: 2
+                strokeWidth: 2,
+                cornerRadiusTL: 10,
+                cornerRadiusTR: 10,
+                cornerRadiusBL: 10,
+                cornerRadiusBR: 10
             });
             const appId = kintone.app.getId();
             const query = kintone.app.getQuery();
@@ -83,12 +87,18 @@
                 }
               });
               const data = {
-                name: "Root",
+                name: "予算",
                 children: children
               };
-              console.log(`Tree data is: ${JSON.stringify(data)}`);
               series.data.setAll([data]);
               series.set("selectedDataItem", series.dataItems[0]);
+
+              // パンくずリストを追加
+              container.children.unshift(
+                am5hierarchy.BreadcrumbBar.new(root, {
+                  series: series
+                })
+              );
                 
               //  ロード時にアニメ化
               series.appear(1000, 100);
